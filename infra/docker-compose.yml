@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: foodbook-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: foodbook
+      POSTGRES_PASSWORD: foodbook
+      POSTGRES_DB: foodbook
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U foodbook -d foodbook"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: foodbook-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: foodbook
+      MINIO_ROOT_PASSWORD: foodbook123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./data/minio:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: foodbook-minio-init
+    depends_on:
+      minio:
+        condition: service_started
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 foodbook foodbook123; do sleep 1; done;
+      mc mb --ignore-existing local/foodbook-media;
+      mc anonymous set download local/foodbook-media;
+      exit 0;
+      "

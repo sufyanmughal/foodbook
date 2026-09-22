@@ -1,0 +1,3 @@
+# De beheeromgeving en de Foodbook zijn niet bedoeld om geïndexeerd te worden.
+User-agent: *
+Disallow: /

@@ -1,0 +1,700 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   De Krim Texel — designsysteem
+
+   Twee registers in één systeem:
+   - **Product** (dit bestand): de werkende beheeromgeving. Chrome is rustig, de
+     accenten zijn schaars, en hiërarchie komt uit gewicht en ruimte, niet uit kleur.
+     Eén sterke sans; geen displayletters in labels, tabellen of formulieren.
+   - **Merk** (de Foodbook-presentatie): daar draagt een serif de kop. Dat staat in
+     `.fb-merk` hieronder, zodat het merkregister niet in de gereedschappen lekt.
+
+   Kleuren zijn afgeleid uit het aangeleverde ontwerp: diep tealgroen als chrome,
+   goud als enige accent, gebroken wit als papier.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Chrome — het tealgroen van de zijbalk en de primaire acties */
+  --kt-teal-900: #14302f;
+  --kt-teal-800: #1c403f;
+  --kt-teal-700: #255252;
+  --kt-teal-600: #2f6564;
+  --kt-teal-500: #3d7c7a;
+  --kt-teal-100: #e3eceb;
+  --kt-teal-050: #f1f6f5;
+
+  /* Accent — goud. Verschijnt alleen waar het iets betekent. */
+  --kt-goud-700: #8f7233;
+  --kt-goud-600: #a8863c;
+  --kt-goud-500: #c5a55a;
+  --kt-goud-100: #faf3e2;
+
+  /* Oppervlakken — neutraal met een vleugje van het merk */
+  --kt-papier: #f7f6f2;
+  --kt-oppervlak: #ffffff;
+  --kt-oppervlak-2: #fbfaf7;
+  --kt-rand: #e3e1d9;
+  --kt-rand-sterk: #cfccc0;
+
+  /* Tekst */
+  --kt-tekst: #1e2928;
+  --kt-tekst-gedempt: #5b6a68;
+  --kt-tekst-op-donker: #f2f6f5;
+  --kt-tekst-op-donker-gedempt: #a9bfbd;
+
+  /* Toestand */
+  --kt-succes: #2f7d5b;
+  --kt-succes-100: #e6f2eb;
+  --kt-waarschuwing: #a8701f;
+  --kt-waarschuwing-100: #fbf0dd;
+  --kt-gevaar: #a8322c;
+  --kt-gevaar-100: #f9e8e7;
+
+  /* Ruimte — 4-punts basis */
+  --kt-1: 4px;
+  --kt-2: 8px;
+  --kt-3: 12px;
+  --kt-4: 16px;
+  --kt-6: 24px;
+  --kt-9: 36px;
+  --kt-14: 56px;
+
+  /* Vorm */
+  --kt-radius: 8px;
+  --kt-radius-groot: 14px;
+  --kt-radius-pil: 999px;
+
+  /* Diepte — één schaal, consequent gebruikt */
+  --kt-schaduw-1: 0 1px 2px rgba(20, 48, 47, 0.06), 0 1px 1px rgba(20, 48, 47, 0.04);
+  --kt-schaduw-2: 0 2px 6px rgba(20, 48, 47, 0.07), 0 1px 2px rgba(20, 48, 47, 0.05);
+  --kt-schaduw-3: 0 12px 32px rgba(20, 48, 47, 0.12), 0 2px 6px rgba(20, 48, 47, 0.06);
+
+  --kt-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --kt-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+
+  --kt-zijbalk-breedte: 244px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body.kt-body {
+  background: var(--kt-papier);
+  color: var(--kt-tekst);
+  font-family: var(--kt-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Zichtbare focus, overal hetzelfde. Nooit weghalen zonder vervanging. */
+.kt-body :focus-visible {
+  outline: 2px dashed var(--kt-teal-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.kt-overslaan {
+  background: var(--kt-teal-800);
+  border-radius: var(--kt-radius);
+  color: var(--kt-tekst-op-donker);
+  left: var(--kt-4);
+  padding: var(--kt-3) var(--kt-4);
+  position: absolute;
+  text-decoration: none;
+  top: -100px;
+  z-index: 100;
+}
+
+.kt-overslaan:focus {
+  top: var(--kt-4);
+}
+
+/* ── Het raamwerk ────────────────────────────────────────────────────────── */
+
+.kt-app {
+  display: grid;
+  grid-template-columns: var(--kt-zijbalk-breedte) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.kt-zijbalk {
+  background: var(--kt-teal-900);
+  color: var(--kt-tekst-op-donker);
+  display: flex;
+  flex-direction: column;
+  gap: var(--kt-6);
+  padding: var(--kt-6) var(--kt-4);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.kt-merk {
+  border-bottom: 1px solid rgba(242, 246, 245, 0.14);
+  padding: 0 var(--kt-2) var(--kt-4);
+}
+
+.kt-merk__naam {
+  color: var(--kt-tekst-op-donker);
+  font-family: var(--kt-serif);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  margin: 0;
+  text-decoration: none;
+}
+
+.kt-merk__belofte {
+  color: var(--kt-tekst-op-donker-gedempt);
+  font-size: 12px;
+  margin: var(--kt-1) 0 0;
+}
+
+.kt-nav__kop {
+  color: var(--kt-tekst-op-donker-gedempt);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: var(--kt-4) var(--kt-2) var(--kt-2);
+  text-transform: uppercase;
+}
+
+.kt-nav__lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kt-nav__link {
+  align-items: center;
+  border-radius: var(--kt-radius);
+  color: var(--kt-tekst-op-donker);
+  display: flex;
+  gap: var(--kt-3);
+  min-height: 36px;
+  padding: var(--kt-2) var(--kt-3);
+  text-decoration: none;
+  transition: background 0.15s ease-out;
+}
+
+.kt-nav__link:hover {
+  background: rgba(242, 246, 245, 0.08);
+}
+
+.kt-nav__link[aria-current='page'] {
+  background: var(--kt-tekst-op-donker);
+  color: var(--kt-teal-900);
+  font-weight: 600;
+}
+
+.kt-nav__link[aria-current='page'] .kt-nav__icoon {
+  color: var(--kt-teal-700);
+}
+
+.kt-nav__icoon {
+  color: var(--kt-goud-500);
+  flex: 0 0 18px;
+  text-align: center;
+}
+
+.kt-nav__link--volgt {
+  color: var(--kt-tekst-op-donker-gedempt);
+  cursor: default;
+}
+
+.kt-nav__link--volgt:hover {
+  background: none;
+}
+
+.kt-nav__volgt {
+  background: rgba(242, 246, 245, 0.12);
+  border-radius: var(--kt-radius-pil);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  margin-left: auto;
+  padding: 2px var(--kt-2);
+  text-transform: uppercase;
+}
+
+/* ── Hoofdgebied ─────────────────────────────────────────────────────────── */
+
+.kt-hoofd {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.kt-balk {
+  align-items: center;
+  background: var(--kt-oppervlak);
+  border-bottom: 1px solid var(--kt-rand);
+  display: flex;
+  gap: var(--kt-4);
+  justify-content: space-between;
+  padding: var(--kt-3) var(--kt-6);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.kt-balk__titel {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.kt-balk__kruimel {
+  color: var(--kt-tekst-gedempt);
+  font-size: 13px;
+  margin: 2px 0 0;
+}
+
+.kt-inhoud {
+  padding: var(--kt-6);
+  max-width: 1280px;
+  width: 100%;
+}
+
+/* ── Kaarten en panelen ──────────────────────────────────────────────────── */
+
+.kt-paneel {
+  background: var(--kt-oppervlak);
+  border: 1px solid var(--kt-rand);
+  border-radius: var(--kt-radius-groot);
+  box-shadow: var(--kt-schaduw-1);
+  margin-bottom: var(--kt-6);
+  padding: var(--kt-6);
+}
+
+.kt-paneel__kop {
+  align-items: baseline;
+  display: flex;
+  gap: var(--kt-3);
+  justify-content: space-between;
+  margin-bottom: var(--kt-4);
+}
+
+.kt-paneel__titel {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.kt-paneel__uitleg {
+  color: var(--kt-tekst-gedempt);
+  font-size: 13px;
+  margin: var(--kt-1) 0 0;
+}
+
+/* ── Cijfers ─────────────────────────────────────────────────────────────── */
+
+.kt-cijfers {
+  display: grid;
+  gap: var(--kt-4);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.kt-cijfer {
+  background: var(--kt-oppervlak-2);
+  border: 1px solid var(--kt-rand);
+  border-radius: var(--kt-radius);
+  display: grid;
+  gap: 2px;
+  padding: var(--kt-3) var(--kt-4);
+}
+
+.kt-cijfer--nadruk {
+  background: var(--kt-teal-050);
+  border-color: var(--kt-teal-100);
+}
+
+.kt-cijfer__label {
+  color: var(--kt-tekst-gedempt);
+  font-size: 12px;
+}
+
+.kt-cijfer__waarde {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ── Tabellen ────────────────────────────────────────────────────────────── */
+
+.kt-tabel {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.kt-tabel th {
+  border-bottom: 1px solid var(--kt-rand-sterk);
+  color: var(--kt-tekst-gedempt);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: var(--kt-2) var(--kt-3);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.kt-tabel td {
+  border-bottom: 1px solid var(--kt-rand);
+  padding: var(--kt-3);
+  vertical-align: top;
+}
+
+.kt-tabel tbody tr:hover {
+  background: var(--kt-oppervlak-2);
+}
+
+.kt-tabel .kt-getal {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.kt-tabel__leeg {
+  color: var(--kt-tekst-gedempt);
+  padding: var(--kt-6) var(--kt-3);
+  text-align: center;
+}
+
+/* ── Knoppen ─────────────────────────────────────────────────────────────── */
+
+.kt-knop {
+  align-items: center;
+  border-radius: var(--kt-radius);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  gap: var(--kt-2);
+  min-height: 36px;
+  padding: var(--kt-2) var(--kt-4);
+  text-decoration: none;
+  transition: background 0.15s ease-out, border-color 0.15s ease-out;
+}
+
+.kt-knop--primair {
+  background: var(--kt-teal-600);
+  border: 1px solid var(--kt-teal-600);
+  color: #ffffff;
+}
+
+.kt-knop--primair:hover {
+  background: var(--kt-teal-700);
+  border-color: var(--kt-teal-700);
+}
+
+.kt-knop--secundair {
+  background: var(--kt-oppervlak);
+  border: 1px solid var(--kt-rand-sterk);
+  color: var(--kt-teal-700);
+}
+
+.kt-knop--secundair:hover {
+  background: var(--kt-teal-050);
+  border-color: var(--kt-teal-500);
+}
+
+.kt-knop[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ── Formuliervelden ─────────────────────────────────────────────────────── */
+
+.kt-veld {
+  display: grid;
+  gap: var(--kt-1);
+}
+
+.kt-veld__label {
+  color: var(--kt-tekst-gedempt);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.kt-invoer {
+  background: var(--kt-oppervlak);
+  border: 1px solid var(--kt-rand-sterk);
+  border-radius: var(--kt-radius);
+  color: inherit;
+  font-family: inherit;
+  font-size: 16px; /* voorkomt inzoomen op iOS */
+  min-height: 38px;
+  padding: var(--kt-2) var(--kt-3);
+  width: 100%;
+}
+
+.kt-invoer:hover {
+  border-color: var(--kt-teal-500);
+}
+
+/* ── Meldingen ───────────────────────────────────────────────────────────── */
+
+.kt-melding {
+  border: 1px solid;
+  border-radius: var(--kt-radius);
+  display: flex;
+  gap: var(--kt-3);
+  padding: var(--kt-3) var(--kt-4);
+}
+
+.kt-melding__tekst {
+  margin: 0;
+}
+
+.kt-melding--waarschuwing {
+  background: var(--kt-waarschuwing-100);
+  border-color: var(--kt-goud-500);
+  color: #5a3d0d;
+}
+
+.kt-melding--let-op {
+  background: var(--kt-gevaar-100);
+  border-color: var(--kt-gevaar);
+  color: #6d211d;
+}
+
+.kt-melding--goed {
+  background: var(--kt-succes-100);
+  border-color: var(--kt-succes);
+  color: #1d5039;
+}
+
+.kt-melding__lijst {
+  margin: var(--kt-2) 0 0;
+  padding-left: var(--kt-6);
+}
+
+/* ── Etiketten ───────────────────────────────────────────────────────────── */
+
+.kt-etiket {
+  border-radius: var(--kt-radius-pil);
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px var(--kt-2);
+  text-transform: uppercase;
+}
+
+.kt-etiket--teal {
+  background: var(--kt-teal-100);
+  color: var(--kt-teal-700);
+}
+
+.kt-etiket--goud {
+  background: var(--kt-goud-100);
+  color: var(--kt-goud-700);
+}
+
+.kt-etiket--rood {
+  background: var(--kt-gevaar-100);
+  color: var(--kt-gevaar);
+}
+
+/* ── Keuzeknoppen (evenementen) ──────────────────────────────────────────── */
+
+.kt-keuze {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kt-2);
+}
+
+.kt-keuze__knop {
+  background: var(--kt-oppervlak);
+  border: 1px solid var(--kt-rand-sterk);
+  border-radius: var(--kt-radius-pil);
+  color: var(--kt-tekst);
+  font-size: 13px;
+  padding: var(--kt-1) var(--kt-3);
+  text-decoration: none;
+}
+
+.kt-keuze__knop:hover {
+  border-color: var(--kt-teal-500);
+}
+
+.kt-keuze__knop[aria-current='true'] {
+  background: var(--kt-teal-700);
+  border-color: var(--kt-teal-700);
+  color: #ffffff;
+}
+
+/* ── Documentrijen ───────────────────────────────────────────────────────── */
+
+.kt-documenten {
+  display: grid;
+  gap: var(--kt-2);
+}
+
+.kt-document {
+  align-items: center;
+  border-bottom: 1px solid var(--kt-rand);
+  display: grid;
+  gap: var(--kt-3);
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  padding: var(--kt-2) 0;
+}
+
+.kt-document:last-child {
+  border-bottom: none;
+}
+
+.kt-document__naam {
+  font-weight: 500;
+}
+
+/* ── Kleinere schermen ───────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .kt-app {
+    grid-template-columns: 1fr;
+  }
+
+  .kt-zijbalk {
+    height: auto;
+    position: static;
+  }
+
+  .kt-nav__lijst {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .kt-nav__link {
+    min-height: 44px;
+  }
+
+  .kt-inhoud,
+  .kt-balk {
+    padding: var(--kt-4);
+  }
+
+  .kt-paneel {
+    padding: var(--kt-4);
+  }
+
+  .kt-document {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kt-body *,
+  .kt-body *::before,
+  .kt-body *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Merkregister — alleen voor de Foodbook-presentatie.
+   Hier mag een serif de kop dragen; in de gereedschappen niet.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.fb-merk {
+  background: var(--kt-papier);
+}
+
+.fb-held {
+  background: var(--kt-teal-900);
+  color: var(--kt-tekst-op-donker);
+  padding: var(--kt-14) var(--kt-6);
+}
+
+.fb-held__binnen {
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+.fb-held__titel {
+  font-family: var(--kt-serif);
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.fb-held__belofte {
+  color: var(--kt-goud-500);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  margin: 0 0 var(--kt-3);
+  text-transform: uppercase;
+}
+
+.fb-held__onder {
+  color: var(--kt-tekst-op-donker-gedempt);
+  font-family: var(--kt-serif);
+  font-size: clamp(18px, 2.4vw, 24px);
+  margin: var(--kt-3) 0 0;
+}
+
+.fb-categorieen {
+  display: grid;
+  gap: var(--kt-4);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.fb-categorie {
+  background: var(--kt-oppervlak);
+  border: 1px solid var(--kt-rand);
+  border-radius: var(--kt-radius-groot);
+  box-shadow: var(--kt-schaduw-1);
+  overflow: hidden;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.fb-categorie:hover {
+  box-shadow: var(--kt-schaduw-3);
+  transform: translateY(-2px);
+}
+
+.fb-categorie__beeld {
+  aspect-ratio: 4 / 3;
+  background: var(--kt-teal-050);
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.fb-categorie__tekst {
+  padding: var(--kt-4);
+}
+
+.fb-categorie__naam {
+  color: var(--kt-tekst);
+  font-family: var(--kt-serif);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.fb-categorie__prijs {
+  color: var(--kt-tekst-gedempt);
+  font-size: 14px;
+  margin: var(--kt-2) 0 0;
+}

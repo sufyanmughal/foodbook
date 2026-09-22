@@ -1,0 +1,38 @@
+node_modules/
+dist/
+.next/
+out/
+build/
+coverage/
+*.tsbuildinfo
+
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# lokale database / media (dev)
+infra/data/
+media/
+uploads/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+devserver.log
+
+# desktop packaging output
+apps/desktop/src-tauri/target/
+
+# gegenereerde voorbeelddocumenten (demo/rooktest)
+voorbeelddocumenten/
+
+# tijdelijk overdrachtspakket voor uitrol
+foodbook-deploy.tar.gz
+
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.vscode/
+.idea/

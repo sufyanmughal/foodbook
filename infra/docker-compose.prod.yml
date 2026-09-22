@@ -1,0 +1,100 @@
+# Productieopstelling voor één server (Digital Ocean, of elke andere VPS).
+#
+#   docker compose -f infra/docker-compose.prod.yml up -d --build
+#
+# Draait drie containers: de database, de applicatie en Caddy als webproxy met automatisch
+# HTTPS. Alleen Caddy is van buitenaf bereikbaar; de database en de app niet.
+#
+# Vul eerst infra/.env in (zie infra/.env.example).
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # Zonder dit volume raak je bij elke herstart alle gegevens kwijt.
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: '3000'
+      HOSTNAME: 0.0.0.0
+      DATABASE_URI: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      NEXT_PUBLIC_SERVER_URL: ${SITE_URL}
+      MEDIA_DIR: /data/media
+      # Pad naar Chromium in de image, voor de PDF-rendering.
+      CHROME_PAD: /usr/bin/chromium
+      # Alleen bij de allereerste uitrol op een lege database op 'true' zetten, zodat de
+      # tabellen worden aangemaakt. Daarna weer weghalen: het schema gaat dan via migraties.
+      DB_PUSH: ${DB_PUSH:-false}
+    volumes:
+      # Foto's blijven bewaard buiten de container.
+      - media-data:/data/media
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'node -e "fetch(''http://localhost:3000/api/access'').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"'
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # Voert de databasemigraties uit. Staat in een apart profiel, zodat hij niet meebouwt en
+  # niet meestart met de gewone app. Aanroepen met:
+  #   docker compose -f infra/docker-compose.prod.yml run --rm migrate
+  migrate:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: migratie
+    profiles: ['migratie']
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URI: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      NEXT_PUBLIC_SERVER_URL: ${SITE_URL}
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      SITE_URL: ${SITE_URL}
+      ACME_EMAIL: ${ACME_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Certificaten en Caddy-status blijven bewaard, zodat HTTPS niet bij elke herstart
+      # opnieuw aangevraagd hoeft te worden.
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  db-data:
+  media-data:
+  caddy-data:
+  caddy-config:
