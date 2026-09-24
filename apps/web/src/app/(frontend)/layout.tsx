@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import React from 'react';
 
+import './fonts.css';
 import './app.css';
 
 export const metadata: Metadata = {

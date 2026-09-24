@@ -19,7 +19,7 @@ export async function eisIngelogdeGebruiker(): Promise<{
   const { user } = await payload.auth({ headers: await headers() });
 
   if (user === null || user === undefined) {
-    redirect('/admin/login');
+    redirect('/inloggen');
   }
 
   return { payload, gebruiker: user };
