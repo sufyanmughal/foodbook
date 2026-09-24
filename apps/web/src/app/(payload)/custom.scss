@@ -1,10 +1,94 @@
 /*
- * Huisstijl van de beheeromgeving. De kleuren komen overeen met het designsysteem
- * uit Fase 1; de exacte bedrijfskleur is per klant instelbaar via Bedrijfsinstellingen
- * en wordt op documenten toegepast, niet op deze beheeromgeving.
+ * Theme for the admin panel.
+ *
+ * "Products", "Recipes", "Events" and the rest link into Payload's admin, which draws its own
+ * interface and does not read the design system in app.css. Payload themes through CSS custom
+ * properties instead, so that is what is overridden here.
+ *
+ * Payload's elevation scale runs from 0 (the page background) to 1000 (the darkest text). The
+ * ramp below maps onto the same palette as the rest of the application: cream paper, sand for
+ * shaded surfaces, the line colour for borders, and the De Krim green where Payload wants its
+ * "dark" end.
+ *
+ * This styles the panel; it cannot reproduce the dashboard's layout, because the markup is
+ * Payload's. Those screens stay Payload's own structure, in the right colours.
  */
 
 :root {
-  --foodbook-primair: #1f6f4a;
-  --foodbook-secundair: #f2c94c;
+  /* Oppervlakken — van licht naar donker, zoals Payload het verwacht */
+  --theme-elevation-0: #f6f1e8;
+  --theme-elevation-50: #fffdf9;
+  --theme-elevation-100: #efe6d6;
+  --theme-elevation-150: #e9dfcd;
+  --theme-elevation-200: #e4dccb;
+  --theme-elevation-250: #ddd3bf;
+  --theme-elevation-300: #d5cab4;
+  --theme-elevation-350: #cfc3ab;
+  --theme-elevation-400: #b9ab90;
+  --theme-elevation-450: #a2947a;
+  --theme-elevation-500: #8b7d64;
+  --theme-elevation-550: #7a6c55;
+  --theme-elevation-600: #6b7770;
+  --theme-elevation-700: #4f6e63;
+  --theme-elevation-750: #3c5a50;
+  --theme-elevation-800: #2b4a41;
+  --theme-elevation-850: #223d35;
+  --theme-elevation-900: #1f3d34;
+  --theme-elevation-950: #15302a;
+  --theme-elevation-1000: #10231f;
+
+  /* Payload heeft op één plek een typefout in de naam staan; meenemen kost niets. */
+  --theme-elvation-400: #b9ab90;
+
+  --theme-bg: #f6f1e8;
+  --theme-text: #22302b;
+  --theme-input-bg: #fffdf9;
+  --theme-border-color: #e4dccb;
+
+  /* Toestand — het goud en de terracotta uit het ontwerp */
+  --theme-success-50: #f0f5f2;
+  --theme-success-100: #dcebe3;
+  --theme-success-150: #cfe3d8;
+  --theme-success-200: #c2dbcd;
+  --theme-success-300: #a5c7b5;
+  --theme-success-400: #83ad9a;
+  --theme-success-500: #7c9a8e;
+  --theme-success-600: #4f6e63;
+  --theme-success-650: #466157;
+  --theme-success-750: #35544a;
+  --theme-success-800: #2b4a41;
+  --theme-success-850: #223d35;
+  --theme-success-900: #1f3d34;
+
+  --theme-warning-100: #f3e2c4;
+  --theme-warning-150: #eedab6;
+  --theme-warning-250: #e2c795;
+  --theme-warning-300: #d9b878;
+  --theme-warning-600: #a8863c;
+  --theme-warning-650: #8a6a24;
+  --theme-warning-800: #5a4a1c;
+
+  --theme-error-50: #f9e8e7;
+  --theme-error-100: #f3d9d6;
+  --theme-error-150: #eccac6;
+  --theme-error-200: #e5bbb5;
+  --theme-error-300: #d79c94;
+  --theme-error-400: #c9786c;
+  --theme-error-500: #b3503f;
+  --theme-error-600: #9a4433;
+  --theme-error-650: #8d3e2e;
+  --theme-error-750: #6f3124;
+  --theme-error-800: #632c20;
+  --theme-error-900: #4d2219;
+  --theme-error-950: #3a1a13;
+
+  /* Lettertypen, dezelfde als in de rest van de applicatie */
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Playfair Display', 'Iowan Old Style', Palatino, Georgia, serif;
+}
+
+/* Payload zet de body op zijn eigen sans; hier de Inter uit het ontwerp. */
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }
