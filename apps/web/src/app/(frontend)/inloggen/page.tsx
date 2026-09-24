@@ -15,6 +15,15 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * Dit scherm moet bij elk verzoek worden opgebouwd, niet tijdens het bouwen.
+ *
+ * Het leest de sessie en start Payload. Payload heeft PAYLOAD_SECRET nodig, en dat bestaat niet
+ * in de bouwfase van de Docker-image. Zonder deze regel probeert Next de pagina tijdens het
+ * bouwen voor te bereiden en stopt de hele bouw met "missing secret key".
+ */
+export const dynamic = 'force-dynamic';
+
 /** De fotostrook links. De uitsnede per kolom komt uit het ontwerp. */
 const STROOK = [
   { bestand: 'col1.jpg', alt: 'Zoervlees in brood', stand: 'lg-mid' },
