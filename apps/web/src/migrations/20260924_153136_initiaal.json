@@ -1,0 +1,6689 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.producten_materialen": {
+      "name": "producten_materialen",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "materiaal_id": {
+          "name": "materiaal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hoeveelheid": {
+          "name": "hoeveelheid",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "per_aantal_gasten": {
+          "name": "per_aantal_gasten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        }
+      },
+      "indexes": {
+        "producten_materialen_order_idx": {
+          "name": "producten_materialen_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_materialen_parent_id_idx": {
+          "name": "producten_materialen_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_materialen_materiaal_idx": {
+          "name": "producten_materialen_materiaal_idx",
+          "columns": [
+            {
+              "expression": "materiaal_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "producten_materialen_materiaal_id_materialen_id_fk": {
+          "name": "producten_materialen_materiaal_id_materialen_id_fk",
+          "tableFrom": "producten_materialen",
+          "tableTo": "materialen",
+          "columnsFrom": [
+            "materiaal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "producten_materialen_parent_id_fk": {
+          "name": "producten_materialen_parent_id_fk",
+          "tableFrom": "producten_materialen",
+          "tableTo": "producten",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producten": {
+      "name": "producten",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "beschrijving": {
+          "name": "beschrijving",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "categorie_id": {
+          "name": "categorie_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hoofdfoto_id": {
+          "name": "hoofdfoto_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "porties_basis": {
+          "name": "porties_basis",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "enum_producten_eenheid",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hoeveelheid_per_persoon": {
+          "name": "hoeveelheid_per_persoon",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recept_id": {
+          "name": "recept_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prijs_per_persoon": {
+          "name": "prijs_per_persoon",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "btw_tarief_id": {
+          "name": "btw_tarief_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "actief": {
+          "name": "actief",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "seizoen_id": {
+          "name": "seizoen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "producten_naam_idx": {
+          "name": "producten_naam_idx",
+          "columns": [
+            {
+              "expression": "naam",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_categorie_idx": {
+          "name": "producten_categorie_idx",
+          "columns": [
+            {
+              "expression": "categorie_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_hoofdfoto_idx": {
+          "name": "producten_hoofdfoto_idx",
+          "columns": [
+            {
+              "expression": "hoofdfoto_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_recept_idx": {
+          "name": "producten_recept_idx",
+          "columns": [
+            {
+              "expression": "recept_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_btw_tarief_idx": {
+          "name": "producten_btw_tarief_idx",
+          "columns": [
+            {
+              "expression": "btw_tarief_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_seizoen_idx": {
+          "name": "producten_seizoen_idx",
+          "columns": [
+            {
+              "expression": "seizoen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_updated_at_idx": {
+          "name": "producten_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_created_at_idx": {
+          "name": "producten_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "producten_categorie_id_categorieen_id_fk": {
+          "name": "producten_categorie_id_categorieen_id_fk",
+          "tableFrom": "producten",
+          "tableTo": "categorieen",
+          "columnsFrom": [
+            "categorie_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "producten_hoofdfoto_id_media_id_fk": {
+          "name": "producten_hoofdfoto_id_media_id_fk",
+          "tableFrom": "producten",
+          "tableTo": "media",
+          "columnsFrom": [
+            "hoofdfoto_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "producten_recept_id_recepten_id_fk": {
+          "name": "producten_recept_id_recepten_id_fk",
+          "tableFrom": "producten",
+          "tableTo": "recepten",
+          "columnsFrom": [
+            "recept_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "producten_btw_tarief_id_btw_tarieven_id_fk": {
+          "name": "producten_btw_tarief_id_btw_tarieven_id_fk",
+          "tableFrom": "producten",
+          "tableTo": "btw_tarieven",
+          "columnsFrom": [
+            "btw_tarief_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "producten_seizoen_id_seizoenen_id_fk": {
+          "name": "producten_seizoen_id_seizoenen_id_fk",
+          "tableFrom": "producten",
+          "tableTo": "seizoenen",
+          "columnsFrom": [
+            "seizoen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producten_rels": {
+      "name": "producten_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "media_id": {
+          "name": "media_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "allergenen_id": {
+          "name": "allergenen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "producten_rels_order_idx": {
+          "name": "producten_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_rels_parent_idx": {
+          "name": "producten_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_rels_path_idx": {
+          "name": "producten_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_rels_media_id_idx": {
+          "name": "producten_rels_media_id_idx",
+          "columns": [
+            {
+              "expression": "media_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producten_rels_allergenen_id_idx": {
+          "name": "producten_rels_allergenen_id_idx",
+          "columns": [
+            {
+              "expression": "allergenen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "producten_rels_parent_fk": {
+          "name": "producten_rels_parent_fk",
+          "tableFrom": "producten_rels",
+          "tableTo": "producten",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "producten_rels_media_fk": {
+          "name": "producten_rels_media_fk",
+          "tableFrom": "producten_rels",
+          "tableTo": "media",
+          "columnsFrom": [
+            "media_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "producten_rels_allergenen_fk": {
+          "name": "producten_rels_allergenen_fk",
+          "tableFrom": "producten_rels",
+          "tableTo": "allergenen",
+          "columnsFrom": [
+            "allergenen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.recepten_ingredienten": {
+      "name": "recepten_ingredienten",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ingredient_id": {
+          "name": "ingredient_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hoeveelheid": {
+          "name": "hoeveelheid",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "enum_recepten_ingredienten_eenheid",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "recepten_ingredienten_order_idx": {
+          "name": "recepten_ingredienten_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "recepten_ingredienten_parent_id_idx": {
+          "name": "recepten_ingredienten_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "recepten_ingredienten_ingredient_idx": {
+          "name": "recepten_ingredienten_ingredient_idx",
+          "columns": [
+            {
+              "expression": "ingredient_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "recepten_ingredienten_ingredient_id_ingredienten_id_fk": {
+          "name": "recepten_ingredienten_ingredient_id_ingredienten_id_fk",
+          "tableFrom": "recepten_ingredienten",
+          "tableTo": "ingredienten",
+          "columnsFrom": [
+            "ingredient_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "recepten_ingredienten_parent_id_fk": {
+          "name": "recepten_ingredienten_parent_id_fk",
+          "tableFrom": "recepten_ingredienten",
+          "tableTo": "recepten",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.recepten": {
+      "name": "recepten",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "basis_porties": {
+          "name": "basis_porties",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hoeveelheid_per_persoon": {
+          "name": "hoeveelheid_per_persoon",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "enum_recepten_eenheid",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bereidingswijze": {
+          "name": "bereidingswijze",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kooktijd_minuten": {
+          "name": "kooktijd_minuten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "keukenstation": {
+          "name": "keukenstation",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "recepten_updated_at_idx": {
+          "name": "recepten_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "recepten_created_at_idx": {
+          "name": "recepten_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ingredienten": {
+      "name": "ingredienten",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inkoopeenheid": {
+          "name": "inkoopeenheid",
+          "type": "enum_ingredienten_inkoopeenheid",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inkoopprijs": {
+          "name": "inkoopprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leverancier_id": {
+          "name": "leverancier_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "houdbaarheid_dagen": {
+          "name": "houdbaarheid_dagen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "voorraad": {
+          "name": "voorraad",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "ingredienten_naam_idx": {
+          "name": "ingredienten_naam_idx",
+          "columns": [
+            {
+              "expression": "naam",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingredienten_leverancier_idx": {
+          "name": "ingredienten_leverancier_idx",
+          "columns": [
+            {
+              "expression": "leverancier_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingredienten_updated_at_idx": {
+          "name": "ingredienten_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingredienten_created_at_idx": {
+          "name": "ingredienten_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "ingredienten_leverancier_id_leveranciers_id_fk": {
+          "name": "ingredienten_leverancier_id_leveranciers_id_fk",
+          "tableFrom": "ingredienten",
+          "tableTo": "leveranciers",
+          "columnsFrom": [
+            "leverancier_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ingredienten_rels": {
+      "name": "ingredienten_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "allergenen_id": {
+          "name": "allergenen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "ingredienten_rels_order_idx": {
+          "name": "ingredienten_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingredienten_rels_parent_idx": {
+          "name": "ingredienten_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingredienten_rels_path_idx": {
+          "name": "ingredienten_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingredienten_rels_allergenen_id_idx": {
+          "name": "ingredienten_rels_allergenen_id_idx",
+          "columns": [
+            {
+              "expression": "allergenen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "ingredienten_rels_parent_fk": {
+          "name": "ingredienten_rels_parent_fk",
+          "tableFrom": "ingredienten_rels",
+          "tableTo": "ingredienten",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "ingredienten_rels_allergenen_fk": {
+          "name": "ingredienten_rels_allergenen_fk",
+          "tableFrom": "ingredienten_rels",
+          "tableTo": "allergenen",
+          "columnsFrom": [
+            "allergenen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.allergenen": {
+      "name": "allergenen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "wettelijke_code": {
+          "name": "wettelijke_code",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icoon_id": {
+          "name": "icoon_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "allergenen_wettelijke_code_idx": {
+          "name": "allergenen_wettelijke_code_idx",
+          "columns": [
+            {
+              "expression": "wettelijke_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "allergenen_icoon_idx": {
+          "name": "allergenen_icoon_idx",
+          "columns": [
+            {
+              "expression": "icoon_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "allergenen_updated_at_idx": {
+          "name": "allergenen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "allergenen_created_at_idx": {
+          "name": "allergenen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "allergenen_icoon_id_media_id_fk": {
+          "name": "allergenen_icoon_id_media_id_fk",
+          "tableFrom": "allergenen",
+          "tableTo": "media",
+          "columnsFrom": [
+            "icoon_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.btw_tarieven": {
+      "name": "btw_tarieven",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "percentage": {
+          "name": "percentage",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "standaard": {
+          "name": "standaard",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "btw_tarieven_updated_at_idx": {
+          "name": "btw_tarieven_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "btw_tarieven_created_at_idx": {
+          "name": "btw_tarieven_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.categorieen": {
+      "name": "categorieen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "volgorde": {
+          "name": "volgorde",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "categorieen_updated_at_idx": {
+          "name": "categorieen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "categorieen_created_at_idx": {
+          "name": "categorieen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.seizoenen": {
+      "name": "seizoenen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "seizoenen_updated_at_idx": {
+          "name": "seizoenen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "seizoenen_created_at_idx": {
+          "name": "seizoenen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.leveranciers": {
+      "name": "leveranciers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contactpersoon": {
+          "name": "contactpersoon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "telefoon": {
+          "name": "telefoon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "leveranciers_updated_at_idx": {
+          "name": "leveranciers_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "leveranciers_created_at_idx": {
+          "name": "leveranciers_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.media": {
+      "name": "media",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "alt_tekst": {
+          "name": "alt_tekst",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "volgorde": {
+          "name": "volgorde",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "thumbnail_u_r_l": {
+          "name": "thumbnail_u_r_l",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filename": {
+          "name": "filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mime_type": {
+          "name": "mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filesize": {
+          "name": "filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "width": {
+          "name": "width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "height": {
+          "name": "height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_x": {
+          "name": "focal_x",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_y": {
+          "name": "focal_y",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_thumbnail_url": {
+          "name": "sizes_thumbnail_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_thumbnail_width": {
+          "name": "sizes_thumbnail_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_thumbnail_height": {
+          "name": "sizes_thumbnail_height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_thumbnail_mime_type": {
+          "name": "sizes_thumbnail_mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_thumbnail_filesize": {
+          "name": "sizes_thumbnail_filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_thumbnail_filename": {
+          "name": "sizes_thumbnail_filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_card_url": {
+          "name": "sizes_foodbook_card_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_card_width": {
+          "name": "sizes_foodbook_card_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_card_height": {
+          "name": "sizes_foodbook_card_height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_card_mime_type": {
+          "name": "sizes_foodbook_card_mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_card_filesize": {
+          "name": "sizes_foodbook_card_filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_card_filename": {
+          "name": "sizes_foodbook_card_filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_hero_url": {
+          "name": "sizes_foodbook_hero_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_hero_width": {
+          "name": "sizes_foodbook_hero_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_hero_height": {
+          "name": "sizes_foodbook_hero_height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_hero_mime_type": {
+          "name": "sizes_foodbook_hero_mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_hero_filesize": {
+          "name": "sizes_foodbook_hero_filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_foodbook_hero_filename": {
+          "name": "sizes_foodbook_hero_filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_print_url": {
+          "name": "sizes_print_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_print_width": {
+          "name": "sizes_print_width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_print_height": {
+          "name": "sizes_print_height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_print_mime_type": {
+          "name": "sizes_print_mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_print_filesize": {
+          "name": "sizes_print_filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sizes_print_filename": {
+          "name": "sizes_print_filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "media_updated_at_idx": {
+          "name": "media_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "media_created_at_idx": {
+          "name": "media_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "media_filename_idx": {
+          "name": "media_filename_idx",
+          "columns": [
+            {
+              "expression": "filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "media_sizes_thumbnail_sizes_thumbnail_filename_idx": {
+          "name": "media_sizes_thumbnail_sizes_thumbnail_filename_idx",
+          "columns": [
+            {
+              "expression": "sizes_thumbnail_filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "media_sizes_foodbook_card_sizes_foodbook_card_filename_idx": {
+          "name": "media_sizes_foodbook_card_sizes_foodbook_card_filename_idx",
+          "columns": [
+            {
+              "expression": "sizes_foodbook_card_filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "media_sizes_foodbook_hero_sizes_foodbook_hero_filename_idx": {
+          "name": "media_sizes_foodbook_hero_sizes_foodbook_hero_filename_idx",
+          "columns": [
+            {
+              "expression": "sizes_foodbook_hero_filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "media_sizes_print_sizes_print_filename_idx": {
+          "name": "media_sizes_print_sizes_print_filename_idx",
+          "columns": [
+            {
+              "expression": "sizes_print_filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.klanten": {
+      "name": "klanten",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contactpersoon": {
+          "name": "contactpersoon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "telefoon": {
+          "name": "telefoon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_straat": {
+          "name": "adres_straat",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_huisnummer": {
+          "name": "adres_huisnummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_postcode": {
+          "name": "adres_postcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_plaats": {
+          "name": "adres_plaats",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_land": {
+          "name": "adres_land",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Nederland'"
+        },
+        "factuuradres_straat": {
+          "name": "factuuradres_straat",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "factuuradres_huisnummer": {
+          "name": "factuuradres_huisnummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "factuuradres_postcode": {
+          "name": "factuuradres_postcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "factuuradres_plaats": {
+          "name": "factuuradres_plaats",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "factuuradres_land": {
+          "name": "factuuradres_land",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Nederland'"
+        },
+        "btw_nummer": {
+          "name": "btw_nummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "notities": {
+          "name": "notities",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "klanten_naam_idx": {
+          "name": "klanten_naam_idx",
+          "columns": [
+            {
+              "expression": "naam",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "klanten_updated_at_idx": {
+          "name": "klanten_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "klanten_created_at_idx": {
+          "name": "klanten_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.evenementen_producten": {
+      "name": "evenementen_producten",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal_gasten_override": {
+          "name": "aantal_gasten_override",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hoeveelheid_per_persoon_override": {
+          "name": "hoeveelheid_per_persoon_override",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "evenementen_producten_order_idx": {
+          "name": "evenementen_producten_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_producten_parent_id_idx": {
+          "name": "evenementen_producten_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_producten_product_idx": {
+          "name": "evenementen_producten_product_idx",
+          "columns": [
+            {
+              "expression": "product_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "evenementen_producten_product_id_producten_id_fk": {
+          "name": "evenementen_producten_product_id_producten_id_fk",
+          "tableFrom": "evenementen_producten",
+          "tableTo": "producten",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "evenementen_producten_parent_id_fk": {
+          "name": "evenementen_producten_parent_id_fk",
+          "tableFrom": "evenementen_producten",
+          "tableTo": "evenementen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.evenementen_materialen": {
+      "name": "evenementen_materialen",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "materiaal_id": {
+          "name": "materiaal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aantal": {
+          "name": "aantal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "evenementen_materialen_order_idx": {
+          "name": "evenementen_materialen_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_materialen_parent_id_idx": {
+          "name": "evenementen_materialen_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_materialen_materiaal_idx": {
+          "name": "evenementen_materialen_materiaal_idx",
+          "columns": [
+            {
+              "expression": "materiaal_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "evenementen_materialen_materiaal_id_materialen_id_fk": {
+          "name": "evenementen_materialen_materiaal_id_materialen_id_fk",
+          "tableFrom": "evenementen_materialen",
+          "tableTo": "materialen",
+          "columnsFrom": [
+            "materiaal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "evenementen_materialen_parent_id_fk": {
+          "name": "evenementen_materialen_parent_id_fk",
+          "tableFrom": "evenementen_materialen",
+          "tableTo": "evenementen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.evenementen": {
+      "name": "evenementen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "klant_id": {
+          "name": "klant_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "titel": {
+          "name": "titel",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum": {
+          "name": "datum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "locatie": {
+          "name": "locatie",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aantal_gasten": {
+          "name": "aantal_gasten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_evenementen_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'concept'"
+        },
+        "notities": {
+          "name": "notities",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "evenementen_klant_idx": {
+          "name": "evenementen_klant_idx",
+          "columns": [
+            {
+              "expression": "klant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_datum_idx": {
+          "name": "evenementen_datum_idx",
+          "columns": [
+            {
+              "expression": "datum",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_status_idx": {
+          "name": "evenementen_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_updated_at_idx": {
+          "name": "evenementen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "evenementen_created_at_idx": {
+          "name": "evenementen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "evenementen_klant_id_klanten_id_fk": {
+          "name": "evenementen_klant_id_klanten_id_fk",
+          "tableFrom": "evenementen",
+          "tableTo": "klanten",
+          "columnsFrom": [
+            "klant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.materialen": {
+      "name": "materialen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "enum_materialen_eenheid",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "voorraad_beheerd": {
+          "name": "voorraad_beheerd",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "voorraad": {
+          "name": "voorraad",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "huurprijs": {
+          "name": "huurprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kostprijs": {
+          "name": "kostprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "materialen_updated_at_idx": {
+          "name": "materialen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "materialen_created_at_idx": {
+          "name": "materialen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.offertes_regels": {
+      "name": "offertes_regels",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "product": {
+          "name": "product",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_naam": {
+          "name": "product_naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aantal_gasten": {
+          "name": "aantal_gasten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hoeveelheid_per_persoon": {
+          "name": "hoeveelheid_per_persoon",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "prijs_per_persoon": {
+          "name": "prijs_per_persoon",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_tarief": {
+          "name": "btw_tarief",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_percentage": {
+          "name": "btw_percentage",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regel_totaal_excl": {
+          "name": "regel_totaal_excl",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_bedrag": {
+          "name": "btw_bedrag",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regel_totaal_incl": {
+          "name": "regel_totaal_incl",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "offertes_regels_order_idx": {
+          "name": "offertes_regels_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offertes_regels_parent_id_idx": {
+          "name": "offertes_regels_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "offertes_regels_parent_id_fk": {
+          "name": "offertes_regels_parent_id_fk",
+          "tableFrom": "offertes_regels",
+          "tableTo": "offertes",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.offertes_btw_uitsplitsing": {
+      "name": "offertes_btw_uitsplitsing",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "btw_tarief": {
+          "name": "btw_tarief",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "percentage": {
+          "name": "percentage",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "grondslag": {
+          "name": "grondslag",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_bedrag": {
+          "name": "btw_bedrag",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "offertes_btw_uitsplitsing_order_idx": {
+          "name": "offertes_btw_uitsplitsing_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offertes_btw_uitsplitsing_parent_id_idx": {
+          "name": "offertes_btw_uitsplitsing_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "offertes_btw_uitsplitsing_parent_id_fk": {
+          "name": "offertes_btw_uitsplitsing_parent_id_fk",
+          "tableFrom": "offertes_btw_uitsplitsing",
+          "tableTo": "offertes",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.offertes": {
+      "name": "offertes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versie": {
+          "name": "versie",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "subtotaal": {
+          "name": "subtotaal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_totaal": {
+          "name": "btw_totaal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "totaal": {
+          "name": "totaal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_offertes_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'concept'"
+        },
+        "geldig_tot": {
+          "name": "geldig_tot",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "notities": {
+          "name": "notities",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pdf_bestand_id": {
+          "name": "pdf_bestand_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "offertes_event_idx": {
+          "name": "offertes_event_idx",
+          "columns": [
+            {
+              "expression": "event_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offertes_status_idx": {
+          "name": "offertes_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offertes_pdf_bestand_idx": {
+          "name": "offertes_pdf_bestand_idx",
+          "columns": [
+            {
+              "expression": "pdf_bestand_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offertes_updated_at_idx": {
+          "name": "offertes_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offertes_created_at_idx": {
+          "name": "offertes_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "offertes_event_id_evenementen_id_fk": {
+          "name": "offertes_event_id_evenementen_id_fk",
+          "tableFrom": "offertes",
+          "tableTo": "evenementen",
+          "columnsFrom": [
+            "event_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "offertes_pdf_bestand_id_media_id_fk": {
+          "name": "offertes_pdf_bestand_id_media_id_fk",
+          "tableFrom": "offertes",
+          "tableTo": "media",
+          "columnsFrom": [
+            "pdf_bestand_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.orders": {
+      "name": "orders",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offerte_id": {
+          "name": "offerte_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_orders_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'bevestigd'"
+        },
+        "bevestigingsdatum": {
+          "name": "bevestigingsdatum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "orders_event_idx": {
+          "name": "orders_event_idx",
+          "columns": [
+            {
+              "expression": "event_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_offerte_idx": {
+          "name": "orders_offerte_idx",
+          "columns": [
+            {
+              "expression": "offerte_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_status_idx": {
+          "name": "orders_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_updated_at_idx": {
+          "name": "orders_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "orders_created_at_idx": {
+          "name": "orders_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "orders_event_id_evenementen_id_fk": {
+          "name": "orders_event_id_evenementen_id_fk",
+          "tableFrom": "orders",
+          "tableTo": "evenementen",
+          "columnsFrom": [
+            "event_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "orders_offerte_id_offertes_id_fk": {
+          "name": "orders_offerte_id_offertes_id_fk",
+          "tableFrom": "orders",
+          "tableTo": "offertes",
+          "columnsFrom": [
+            "offerte_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.facturen_regels": {
+      "name": "facturen_regels",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "omschrijving": {
+          "name": "omschrijving",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aantal": {
+          "name": "aantal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eenheidsprijs": {
+          "name": "eenheidsprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_tarief": {
+          "name": "btw_tarief",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_percentage": {
+          "name": "btw_percentage",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regel_totaal_excl": {
+          "name": "regel_totaal_excl",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_bedrag": {
+          "name": "btw_bedrag",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "regel_totaal_incl": {
+          "name": "regel_totaal_incl",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "facturen_regels_order_idx": {
+          "name": "facturen_regels_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_regels_parent_id_idx": {
+          "name": "facturen_regels_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "facturen_regels_parent_id_fk": {
+          "name": "facturen_regels_parent_id_fk",
+          "tableFrom": "facturen_regels",
+          "tableTo": "facturen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.facturen_btw_uitsplitsing": {
+      "name": "facturen_btw_uitsplitsing",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "btw_tarief": {
+          "name": "btw_tarief",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "percentage": {
+          "name": "percentage",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "grondslag": {
+          "name": "grondslag",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_bedrag": {
+          "name": "btw_bedrag",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "facturen_btw_uitsplitsing_order_idx": {
+          "name": "facturen_btw_uitsplitsing_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_btw_uitsplitsing_parent_id_idx": {
+          "name": "facturen_btw_uitsplitsing_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "facturen_btw_uitsplitsing_parent_id_fk": {
+          "name": "facturen_btw_uitsplitsing_parent_id_fk",
+          "tableFrom": "facturen_btw_uitsplitsing",
+          "tableTo": "facturen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.facturen": {
+      "name": "facturen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order_id": {
+          "name": "order_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "factuurnummer": {
+          "name": "factuurnummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "factuurdatum": {
+          "name": "factuurdatum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vervaldatum": {
+          "name": "vervaldatum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtotaal": {
+          "name": "subtotaal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_totaal": {
+          "name": "btw_totaal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "totaal": {
+          "name": "totaal",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_facturen_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'concept'"
+        },
+        "credit_van_id": {
+          "name": "credit_van_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pdf_bestand_id": {
+          "name": "pdf_bestand_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "facturen_order_idx": {
+          "name": "facturen_order_idx",
+          "columns": [
+            {
+              "expression": "order_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_factuurnummer_idx": {
+          "name": "facturen_factuurnummer_idx",
+          "columns": [
+            {
+              "expression": "factuurnummer",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_status_idx": {
+          "name": "facturen_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_credit_van_idx": {
+          "name": "facturen_credit_van_idx",
+          "columns": [
+            {
+              "expression": "credit_van_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_pdf_bestand_idx": {
+          "name": "facturen_pdf_bestand_idx",
+          "columns": [
+            {
+              "expression": "pdf_bestand_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_updated_at_idx": {
+          "name": "facturen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "facturen_created_at_idx": {
+          "name": "facturen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "facturen_order_id_orders_id_fk": {
+          "name": "facturen_order_id_orders_id_fk",
+          "tableFrom": "facturen",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "facturen_credit_van_id_facturen_id_fk": {
+          "name": "facturen_credit_van_id_facturen_id_fk",
+          "tableFrom": "facturen",
+          "tableTo": "facturen",
+          "columnsFrom": [
+            "credit_van_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "facturen_pdf_bestand_id_media_id_fk": {
+          "name": "facturen_pdf_bestand_id_media_id_fk",
+          "tableFrom": "facturen",
+          "tableTo": "media",
+          "columnsFrom": [
+            "pdf_bestand_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producties_regels_ingredienten": {
+      "name": "producties_regels_ingredienten",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ingredient": {
+          "name": "ingredient",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hoeveelheid": {
+          "name": "hoeveelheid",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "basis_eenheid": {
+          "name": "basis_eenheid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kostprijs": {
+          "name": "kostprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "producties_regels_ingredienten_order_idx": {
+          "name": "producties_regels_ingredienten_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producties_regels_ingredienten_parent_id_idx": {
+          "name": "producties_regels_ingredienten_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "producties_regels_ingredienten_parent_id_fk": {
+          "name": "producties_regels_ingredienten_parent_id_fk",
+          "tableFrom": "producties_regels_ingredienten",
+          "tableTo": "producties_regels",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producties_regels": {
+      "name": "producties_regels",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "product": {
+          "name": "product",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_naam": {
+          "name": "product_naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recept": {
+          "name": "recept",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recept_naam": {
+          "name": "recept_naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "keukenstation": {
+          "name": "keukenstation",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aantal_gasten": {
+          "name": "aantal_gasten",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hoeveelheid_per_persoon": {
+          "name": "hoeveelheid_per_persoon",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_hoeveelheid": {
+          "name": "product_hoeveelheid",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kostprijs": {
+          "name": "kostprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "producties_regels_order_idx": {
+          "name": "producties_regels_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producties_regels_parent_id_idx": {
+          "name": "producties_regels_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "producties_regels_parent_id_fk": {
+          "name": "producties_regels_parent_id_fk",
+          "tableFrom": "producties_regels",
+          "tableTo": "producties",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.producties": {
+      "name": "producties",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order_id": {
+          "name": "order_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "keukenlijst_notities": {
+          "name": "keukenlijst_notities",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "producties_order_idx": {
+          "name": "producties_order_idx",
+          "columns": [
+            {
+              "expression": "order_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producties_updated_at_idx": {
+          "name": "producties_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "producties_created_at_idx": {
+          "name": "producties_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "producties_order_id_orders_id_fk": {
+          "name": "producties_order_id_orders_id_fk",
+          "tableFrom": "producties",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.inkopen_regels": {
+      "name": "inkopen_regels",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ingredient": {
+          "name": "ingredient",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hoeveelheid": {
+          "name": "hoeveelheid",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inkoop_eenheid": {
+          "name": "inkoop_eenheid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eenheidsprijs": {
+          "name": "eenheidsprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kostprijs": {
+          "name": "kostprijs",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leverancier": {
+          "name": "leverancier",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leverancier_naam": {
+          "name": "leverancier_naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "inkopen_regels_order_idx": {
+          "name": "inkopen_regels_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "inkopen_regels_parent_id_idx": {
+          "name": "inkopen_regels_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "inkopen_regels_parent_id_fk": {
+          "name": "inkopen_regels_parent_id_fk",
+          "tableFrom": "inkopen_regels",
+          "tableTo": "inkopen",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.inkopen": {
+      "name": "inkopen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "periode_van": {
+          "name": "periode_van",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "periode_tot": {
+          "name": "periode_tot",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "inkopen_periode_tot_idx": {
+          "name": "inkopen_periode_tot_idx",
+          "columns": [
+            {
+              "expression": "periode_tot",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "inkopen_updated_at_idx": {
+          "name": "inkopen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "inkopen_created_at_idx": {
+          "name": "inkopen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.inkopen_texts": {
+      "name": "inkopen_texts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "inkopen_texts_order_parent": {
+          "name": "inkopen_texts_order_parent",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "inkopen_texts_parent_fk": {
+          "name": "inkopen_texts_parent_fk",
+          "tableFrom": "inkopen_texts",
+          "tableTo": "inkopen",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pickings_regels": {
+      "name": "pickings_regels",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "soort": {
+          "name": "soort",
+          "type": "enum_pickings_regels_soort",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "referentie": {
+          "name": "referentie",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "omschrijving": {
+          "name": "omschrijving",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hoeveelheid": {
+          "name": "hoeveelheid",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eenheid": {
+          "name": "eenheid",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "afgevinkt": {
+          "name": "afgevinkt",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {
+        "pickings_regels_order_idx": {
+          "name": "pickings_regels_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pickings_regels_parent_id_idx": {
+          "name": "pickings_regels_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pickings_regels_parent_id_fk": {
+          "name": "pickings_regels_parent_id_fk",
+          "tableFrom": "pickings_regels",
+          "tableTo": "pickings",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pickings": {
+      "name": "pickings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order_id": {
+          "name": "order_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_pickings_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'open'"
+        },
+        "afgevinkt_door_id": {
+          "name": "afgevinkt_door_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "afgevinkt_op": {
+          "name": "afgevinkt_op",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "pickings_order_idx": {
+          "name": "pickings_order_idx",
+          "columns": [
+            {
+              "expression": "order_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pickings_afgevinkt_door_idx": {
+          "name": "pickings_afgevinkt_door_idx",
+          "columns": [
+            {
+              "expression": "afgevinkt_door_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pickings_updated_at_idx": {
+          "name": "pickings_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "pickings_created_at_idx": {
+          "name": "pickings_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "pickings_order_id_orders_id_fk": {
+          "name": "pickings_order_id_orders_id_fk",
+          "tableFrom": "pickings",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "pickings_afgevinkt_door_id_gebruikers_id_fk": {
+          "name": "pickings_afgevinkt_door_id_gebruikers_id_fk",
+          "tableFrom": "pickings",
+          "tableTo": "gebruikers",
+          "columnsFrom": [
+            "afgevinkt_door_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.leveringen": {
+      "name": "leveringen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order_id": {
+          "name": "order_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leverdatum": {
+          "name": "leverdatum",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "levertijd": {
+          "name": "levertijd",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adres_straat": {
+          "name": "adres_straat",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_huisnummer": {
+          "name": "adres_huisnummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_postcode": {
+          "name": "adres_postcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_plaats": {
+          "name": "adres_plaats",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_land": {
+          "name": "adres_land",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Nederland'"
+        },
+        "verantwoordelijke": {
+          "name": "verantwoordelijke",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_leveringen_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'gepland'"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "leveringen_order_idx": {
+          "name": "leveringen_order_idx",
+          "columns": [
+            {
+              "expression": "order_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "leveringen_status_idx": {
+          "name": "leveringen_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "leveringen_updated_at_idx": {
+          "name": "leveringen_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "leveringen_created_at_idx": {
+          "name": "leveringen_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "leveringen_order_id_orders_id_fk": {
+          "name": "leveringen_order_id_orders_id_fk",
+          "tableFrom": "leveringen",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.gebruikers_sessions": {
+      "name": "gebruikers_sessions",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "gebruikers_sessions_order_idx": {
+          "name": "gebruikers_sessions_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "gebruikers_sessions_parent_id_idx": {
+          "name": "gebruikers_sessions_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "gebruikers_sessions_parent_id_fk": {
+          "name": "gebruikers_sessions_parent_id_fk",
+          "tableFrom": "gebruikers_sessions",
+          "tableTo": "gebruikers",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.gebruikers": {
+      "name": "gebruikers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rol": {
+          "name": "rol",
+          "type": "enum_gebruikers_rol",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'verkoop'"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reset_password_token": {
+          "name": "reset_password_token",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reset_password_expiration": {
+          "name": "reset_password_expiration",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salt": {
+          "name": "salt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hash": {
+          "name": "hash",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reset_password_requested_at": {
+          "name": "reset_password_requested_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "login_attempts": {
+          "name": "login_attempts",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "lock_until": {
+          "name": "lock_until",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "gebruikers_updated_at_idx": {
+          "name": "gebruikers_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "gebruikers_created_at_idx": {
+          "name": "gebruikers_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "gebruikers_email_idx": {
+          "name": "gebruikers_email_idx",
+          "columns": [
+            {
+              "expression": "email",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.verzendlog": {
+      "name": "verzendlog",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "document_type": {
+          "name": "document_type",
+          "type": "enum_verzendlog_document_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ontvanger": {
+          "name": "ontvanger",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "onderwerp": {
+          "name": "onderwerp",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "verzonden_op": {
+          "name": "verzonden_op",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "verzonden_door_id": {
+          "name": "verzonden_door_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "verzendlog_event_idx": {
+          "name": "verzendlog_event_idx",
+          "columns": [
+            {
+              "expression": "event_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "verzendlog_verzonden_door_idx": {
+          "name": "verzendlog_verzonden_door_idx",
+          "columns": [
+            {
+              "expression": "verzonden_door_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "verzendlog_updated_at_idx": {
+          "name": "verzendlog_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "verzendlog_created_at_idx": {
+          "name": "verzendlog_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "verzendlog_event_id_evenementen_id_fk": {
+          "name": "verzendlog_event_id_evenementen_id_fk",
+          "tableFrom": "verzendlog",
+          "tableTo": "evenementen",
+          "columnsFrom": [
+            "event_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "verzendlog_verzonden_door_id_gebruikers_id_fk": {
+          "name": "verzendlog_verzonden_door_id_gebruikers_id_fk",
+          "tableFrom": "verzendlog",
+          "tableTo": "gebruikers",
+          "columnsFrom": [
+            "verzonden_door_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_kv": {
+      "name": "payload_kv",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "payload_kv_key_idx": {
+          "name": "payload_kv_key_idx",
+          "columns": [
+            {
+              "expression": "key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_locked_documents": {
+      "name": "payload_locked_documents",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "global_slug": {
+          "name": "global_slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_locked_documents_global_slug_idx": {
+          "name": "payload_locked_documents_global_slug_idx",
+          "columns": [
+            {
+              "expression": "global_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_updated_at_idx": {
+          "name": "payload_locked_documents_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_created_at_idx": {
+          "name": "payload_locked_documents_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_locked_documents_rels": {
+      "name": "payload_locked_documents_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "producten_id": {
+          "name": "producten_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recepten_id": {
+          "name": "recepten_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ingredienten_id": {
+          "name": "ingredienten_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "allergenen_id": {
+          "name": "allergenen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "btw_tarieven_id": {
+          "name": "btw_tarieven_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "categorieen_id": {
+          "name": "categorieen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seizoenen_id": {
+          "name": "seizoenen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leveranciers_id": {
+          "name": "leveranciers_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "media_id": {
+          "name": "media_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "klanten_id": {
+          "name": "klanten_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "evenementen_id": {
+          "name": "evenementen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "materialen_id": {
+          "name": "materialen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "offertes_id": {
+          "name": "offertes_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "orders_id": {
+          "name": "orders_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "facturen_id": {
+          "name": "facturen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "producties_id": {
+          "name": "producties_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inkopen_id": {
+          "name": "inkopen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pickings_id": {
+          "name": "pickings_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leveringen_id": {
+          "name": "leveringen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gebruikers_id": {
+          "name": "gebruikers_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verzendlog_id": {
+          "name": "verzendlog_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "payload_locked_documents_rels_order_idx": {
+          "name": "payload_locked_documents_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_parent_idx": {
+          "name": "payload_locked_documents_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_path_idx": {
+          "name": "payload_locked_documents_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_producten_id_idx": {
+          "name": "payload_locked_documents_rels_producten_id_idx",
+          "columns": [
+            {
+              "expression": "producten_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_recepten_id_idx": {
+          "name": "payload_locked_documents_rels_recepten_id_idx",
+          "columns": [
+            {
+              "expression": "recepten_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_ingredienten_id_idx": {
+          "name": "payload_locked_documents_rels_ingredienten_id_idx",
+          "columns": [
+            {
+              "expression": "ingredienten_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_allergenen_id_idx": {
+          "name": "payload_locked_documents_rels_allergenen_id_idx",
+          "columns": [
+            {
+              "expression": "allergenen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_btw_tarieven_id_idx": {
+          "name": "payload_locked_documents_rels_btw_tarieven_id_idx",
+          "columns": [
+            {
+              "expression": "btw_tarieven_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_categorieen_id_idx": {
+          "name": "payload_locked_documents_rels_categorieen_id_idx",
+          "columns": [
+            {
+              "expression": "categorieen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_seizoenen_id_idx": {
+          "name": "payload_locked_documents_rels_seizoenen_id_idx",
+          "columns": [
+            {
+              "expression": "seizoenen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_leveranciers_id_idx": {
+          "name": "payload_locked_documents_rels_leveranciers_id_idx",
+          "columns": [
+            {
+              "expression": "leveranciers_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_media_id_idx": {
+          "name": "payload_locked_documents_rels_media_id_idx",
+          "columns": [
+            {
+              "expression": "media_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_klanten_id_idx": {
+          "name": "payload_locked_documents_rels_klanten_id_idx",
+          "columns": [
+            {
+              "expression": "klanten_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_evenementen_id_idx": {
+          "name": "payload_locked_documents_rels_evenementen_id_idx",
+          "columns": [
+            {
+              "expression": "evenementen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_materialen_id_idx": {
+          "name": "payload_locked_documents_rels_materialen_id_idx",
+          "columns": [
+            {
+              "expression": "materialen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_offertes_id_idx": {
+          "name": "payload_locked_documents_rels_offertes_id_idx",
+          "columns": [
+            {
+              "expression": "offertes_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_orders_id_idx": {
+          "name": "payload_locked_documents_rels_orders_id_idx",
+          "columns": [
+            {
+              "expression": "orders_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_facturen_id_idx": {
+          "name": "payload_locked_documents_rels_facturen_id_idx",
+          "columns": [
+            {
+              "expression": "facturen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_producties_id_idx": {
+          "name": "payload_locked_documents_rels_producties_id_idx",
+          "columns": [
+            {
+              "expression": "producties_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_inkopen_id_idx": {
+          "name": "payload_locked_documents_rels_inkopen_id_idx",
+          "columns": [
+            {
+              "expression": "inkopen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_pickings_id_idx": {
+          "name": "payload_locked_documents_rels_pickings_id_idx",
+          "columns": [
+            {
+              "expression": "pickings_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_leveringen_id_idx": {
+          "name": "payload_locked_documents_rels_leveringen_id_idx",
+          "columns": [
+            {
+              "expression": "leveringen_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_gebruikers_id_idx": {
+          "name": "payload_locked_documents_rels_gebruikers_id_idx",
+          "columns": [
+            {
+              "expression": "gebruikers_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_verzendlog_id_idx": {
+          "name": "payload_locked_documents_rels_verzendlog_id_idx",
+          "columns": [
+            {
+              "expression": "verzendlog_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "payload_locked_documents_rels_parent_fk": {
+          "name": "payload_locked_documents_rels_parent_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "payload_locked_documents",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_producten_fk": {
+          "name": "payload_locked_documents_rels_producten_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "producten",
+          "columnsFrom": [
+            "producten_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_recepten_fk": {
+          "name": "payload_locked_documents_rels_recepten_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "recepten",
+          "columnsFrom": [
+            "recepten_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_ingredienten_fk": {
+          "name": "payload_locked_documents_rels_ingredienten_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "ingredienten",
+          "columnsFrom": [
+            "ingredienten_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_allergenen_fk": {
+          "name": "payload_locked_documents_rels_allergenen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "allergenen",
+          "columnsFrom": [
+            "allergenen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_btw_tarieven_fk": {
+          "name": "payload_locked_documents_rels_btw_tarieven_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "btw_tarieven",
+          "columnsFrom": [
+            "btw_tarieven_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_categorieen_fk": {
+          "name": "payload_locked_documents_rels_categorieen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "categorieen",
+          "columnsFrom": [
+            "categorieen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_seizoenen_fk": {
+          "name": "payload_locked_documents_rels_seizoenen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "seizoenen",
+          "columnsFrom": [
+            "seizoenen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_leveranciers_fk": {
+          "name": "payload_locked_documents_rels_leveranciers_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "leveranciers",
+          "columnsFrom": [
+            "leveranciers_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_media_fk": {
+          "name": "payload_locked_documents_rels_media_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "media",
+          "columnsFrom": [
+            "media_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_klanten_fk": {
+          "name": "payload_locked_documents_rels_klanten_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "klanten",
+          "columnsFrom": [
+            "klanten_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_evenementen_fk": {
+          "name": "payload_locked_documents_rels_evenementen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "evenementen",
+          "columnsFrom": [
+            "evenementen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_materialen_fk": {
+          "name": "payload_locked_documents_rels_materialen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "materialen",
+          "columnsFrom": [
+            "materialen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_offertes_fk": {
+          "name": "payload_locked_documents_rels_offertes_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "offertes",
+          "columnsFrom": [
+            "offertes_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_orders_fk": {
+          "name": "payload_locked_documents_rels_orders_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "orders_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_facturen_fk": {
+          "name": "payload_locked_documents_rels_facturen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "facturen",
+          "columnsFrom": [
+            "facturen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_producties_fk": {
+          "name": "payload_locked_documents_rels_producties_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "producties",
+          "columnsFrom": [
+            "producties_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_inkopen_fk": {
+          "name": "payload_locked_documents_rels_inkopen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "inkopen",
+          "columnsFrom": [
+            "inkopen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_pickings_fk": {
+          "name": "payload_locked_documents_rels_pickings_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "pickings",
+          "columnsFrom": [
+            "pickings_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_leveringen_fk": {
+          "name": "payload_locked_documents_rels_leveringen_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "leveringen",
+          "columnsFrom": [
+            "leveringen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_gebruikers_fk": {
+          "name": "payload_locked_documents_rels_gebruikers_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "gebruikers",
+          "columnsFrom": [
+            "gebruikers_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_verzendlog_fk": {
+          "name": "payload_locked_documents_rels_verzendlog_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "verzendlog",
+          "columnsFrom": [
+            "verzendlog_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_preferences": {
+      "name": "payload_preferences",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "value": {
+          "name": "value",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_preferences_key_idx": {
+          "name": "payload_preferences_key_idx",
+          "columns": [
+            {
+              "expression": "key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_updated_at_idx": {
+          "name": "payload_preferences_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_created_at_idx": {
+          "name": "payload_preferences_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_preferences_rels": {
+      "name": "payload_preferences_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gebruikers_id": {
+          "name": "gebruikers_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "payload_preferences_rels_order_idx": {
+          "name": "payload_preferences_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_rels_parent_idx": {
+          "name": "payload_preferences_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_rels_path_idx": {
+          "name": "payload_preferences_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_preferences_rels_gebruikers_id_idx": {
+          "name": "payload_preferences_rels_gebruikers_id_idx",
+          "columns": [
+            {
+              "expression": "gebruikers_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "payload_preferences_rels_parent_fk": {
+          "name": "payload_preferences_rels_parent_fk",
+          "tableFrom": "payload_preferences_rels",
+          "tableTo": "payload_preferences",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_preferences_rels_gebruikers_fk": {
+          "name": "payload_preferences_rels_gebruikers_fk",
+          "tableFrom": "payload_preferences_rels",
+          "tableTo": "gebruikers",
+          "columnsFrom": [
+            "gebruikers_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payload_migrations": {
+      "name": "payload_migrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "batch": {
+          "name": "batch",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "payload_migrations_updated_at_idx": {
+          "name": "payload_migrations_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_migrations_created_at_idx": {
+          "name": "payload_migrations_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bedrijfsinstellingen": {
+      "name": "bedrijfsinstellingen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logo_id": {
+          "name": "logo_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kvk_nummer": {
+          "name": "kvk_nummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "btw_nummer": {
+          "name": "btw_nummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "iban": {
+          "name": "iban",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adres_straat": {
+          "name": "adres_straat",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_huisnummer": {
+          "name": "adres_huisnummer",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_postcode": {
+          "name": "adres_postcode",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_plaats": {
+          "name": "adres_plaats",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adres_land": {
+          "name": "adres_land",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Nederland'"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telefoon": {
+          "name": "telefoon",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "primaire_kleur": {
+          "name": "primaire_kleur",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#2f6564'"
+        },
+        "secundaire_kleur": {
+          "name": "secundaire_kleur",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#c5a55a'"
+        },
+        "standaard_voettekst": {
+          "name": "standaard_voettekst",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "betalingstermijn_dagen": {
+          "name": "betalingstermijn_dagen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 30
+        },
+        "offerte_geldigheid_dagen": {
+          "name": "offerte_geldigheid_dagen",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 30
+        },
+        "factuur_prefix": {
+          "name": "factuur_prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'F'"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "bedrijfsinstellingen_logo_idx": {
+          "name": "bedrijfsinstellingen_logo_idx",
+          "columns": [
+            {
+              "expression": "logo_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "bedrijfsinstellingen_logo_id_media_id_fk": {
+          "name": "bedrijfsinstellingen_logo_id_media_id_fk",
+          "tableFrom": "bedrijfsinstellingen",
+          "tableTo": "media",
+          "columnsFrom": [
+            "logo_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.enum_producten_eenheid": {
+      "name": "enum_producten_eenheid",
+      "schema": "public",
+      "values": [
+        "gram",
+        "ml",
+        "stuk",
+        "kg",
+        "liter"
+      ]
+    },
+    "public.enum_recepten_ingredienten_eenheid": {
+      "name": "enum_recepten_ingredienten_eenheid",
+      "schema": "public",
+      "values": [
+        "gram",
+        "ml",
+        "stuk",
+        "kg",
+        "liter"
+      ]
+    },
+    "public.enum_recepten_eenheid": {
+      "name": "enum_recepten_eenheid",
+      "schema": "public",
+      "values": [
+        "gram",
+        "ml",
+        "stuk",
+        "kg",
+        "liter"
+      ]
+    },
+    "public.enum_ingredienten_inkoopeenheid": {
+      "name": "enum_ingredienten_inkoopeenheid",
+      "schema": "public",
+      "values": [
+        "gram",
+        "ml",
+        "stuk",
+        "kg",
+        "liter"
+      ]
+    },
+    "public.enum_evenementen_status": {
+      "name": "enum_evenementen_status",
+      "schema": "public",
+      "values": [
+        "concept",
+        "offerte_verzonden",
+        "bevestigd",
+        "in_productie",
+        "geleverd",
+        "gefactureerd",
+        "afgerond"
+      ]
+    },
+    "public.enum_materialen_eenheid": {
+      "name": "enum_materialen_eenheid",
+      "schema": "public",
+      "values": [
+        "gram",
+        "ml",
+        "stuk",
+        "kg",
+        "liter"
+      ]
+    },
+    "public.enum_offertes_status": {
+      "name": "enum_offertes_status",
+      "schema": "public",
+      "values": [
+        "concept",
+        "verzonden",
+        "geaccepteerd",
+        "verlopen",
+        "geweigerd"
+      ]
+    },
+    "public.enum_orders_status": {
+      "name": "enum_orders_status",
+      "schema": "public",
+      "values": [
+        "bevestigd",
+        "in_productie",
+        "gereed",
+        "geleverd"
+      ]
+    },
+    "public.enum_facturen_status": {
+      "name": "enum_facturen_status",
+      "schema": "public",
+      "values": [
+        "concept",
+        "verzonden",
+        "betaald",
+        "te_laat"
+      ]
+    },
+    "public.enum_pickings_regels_soort": {
+      "name": "enum_pickings_regels_soort",
+      "schema": "public",
+      "values": [
+        "voedsel",
+        "materiaal"
+      ]
+    },
+    "public.enum_pickings_status": {
+      "name": "enum_pickings_status",
+      "schema": "public",
+      "values": [
+        "open",
+        "afgevinkt"
+      ]
+    },
+    "public.enum_leveringen_status": {
+      "name": "enum_leveringen_status",
+      "schema": "public",
+      "values": [
+        "gepland",
+        "onderweg",
+        "geleverd"
+      ]
+    },
+    "public.enum_gebruikers_rol": {
+      "name": "enum_gebruikers_rol",
+      "schema": "public",
+      "values": [
+        "beheerder",
+        "verkoop",
+        "keuken",
+        "logistiek"
+      ]
+    },
+    "public.enum_verzendlog_document_type": {
+      "name": "enum_verzendlog_document_type",
+      "schema": "public",
+      "values": [
+        "offerte",
+        "orderbevestiging",
+        "productielijst",
+        "keukenlijst",
+        "inkooplijst",
+        "materialenlijst",
+        "paklijst",
+        "leveringslijst",
+        "allergenenlijst",
+        "factuur"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "id": "9807a83e-f420-4f32-bcf0-520faf7335ef",
+  "prevId": "00000000-0000-0000-0000-000000000000"
+}
