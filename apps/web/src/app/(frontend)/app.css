@@ -1,55 +1,59 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    De Krim Texel — designsysteem
 
+   De waarden komen letterlijk uit het aangeleverde ontwerp
+   (foodbook-design/index.html). Ze staan hier op één plek, zodat ontwerp en
+   applicatie niet uit elkaar kunnen lopen.
+
    Twee registers in één systeem:
    - **Product** (dit bestand): de werkende beheeromgeving. Chrome is rustig, de
      accenten zijn schaars, en hiërarchie komt uit gewicht en ruimte, niet uit kleur.
-     Eén sterke sans; geen displayletters in labels, tabellen of formulieren.
-   - **Merk** (de Foodbook-presentatie): daar draagt een serif de kop. Dat staat in
+   - **Merk** (de Foodbook-presentatie): daar draagt de serif de kop. Dat staat in
      `.fb-merk` hieronder, zodat het merkregister niet in de gereedschappen lekt.
 
-   Kleuren zijn afgeleid uit het aangeleverde ontwerp: diep tealgroen als chrome,
-   goud als enige accent, gebroken wit als papier.
+   Het donkere verloop hoort bij de **zijbalk**, niet bij de pagina. De pagina is
+   crème. Dat is wat het ontwerp laat zien, en het houdt tabellen, formulieren en
+   documenten leesbaar.
    ───────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Chrome — het tealgroen van de zijbalk en de primaire acties */
-  --kt-teal-900: #14302f;
-  --kt-teal-800: #1c403f;
-  --kt-teal-700: #255252;
-  --kt-teal-600: #2f6564;
-  --kt-teal-500: #3d7c7a;
-  --kt-teal-100: #e3eceb;
-  --kt-teal-050: #f1f6f5;
+  /* Merkgroen — de zijbalk en de primaire acties */
+  --kt-teal-900: #15302a; /* forest-dark — einde van het zijbalkverloop */
+  --kt-teal-800: #1f3d34; /* forest — begin van het zijbalkverloop */
+  --kt-teal-700: #4f6e63; /* sage-dark — secundaire tekst en randen */
+  --kt-teal-600: #1f3d34; /* primaire knoppen */
+  --kt-teal-500: #7c9a8e; /* sage — hover en zachte accenten */
+  --kt-teal-100: #dcebe3;
+  --kt-teal-050: #f0f5f2;
 
   /* Accent — goud. Verschijnt alleen waar het iets betekent. */
-  --kt-goud-700: #8f7233;
-  --kt-goud-600: #a8863c;
-  --kt-goud-500: #c5a55a;
-  --kt-goud-100: #faf3e2;
+  --kt-goud-700: #8a6a24;
+  --kt-goud-600: #b08a34;
+  --kt-goud-500: #c99a3f;
+  --kt-goud-100: #f3e2c4;
 
-  /* Oppervlakken — neutraal met een vleugje van het merk */
-  --kt-papier: #f7f6f2;
-  --kt-oppervlak: #ffffff;
-  --kt-oppervlak-2: #fbfaf7;
-  --kt-rand: #e3e1d9;
-  --kt-rand-sterk: #cfccc0;
+  /* Warm tweede accent uit het ontwerp */
+  --kt-terracotta: #c17a4f;
 
-  /* Ondergrond — het donkere doek waar de hele applicatie op staat. Eén verloop, overal
-     hetzelfde, zodat elk scherm dezelfde basis heeft. */
-  --kt-achtergrond-1: #243d3a;
-  --kt-achtergrond-2: #243a38;
-  --kt-achtergrond: linear-gradient(160deg, var(--kt-achtergrond-1) 0%, var(--kt-achtergrond-2) 100%);
+  /* Oppervlakken */
+  --kt-papier: #f6f1e8; /* cream */
+  --kt-oppervlak: #fffdf9; /* cream-card */
+  --kt-oppervlak-2: #efe6d6; /* sand */
+  --kt-rand: #e4dccb; /* line */
+  --kt-rand-sterk: #cfc3ab;
+
+  /* Eén definitie van het zijbalkverloop. */
+  --kt-zijbalk-verloop: linear-gradient(180deg, var(--kt-teal-800) 0%, var(--kt-teal-900) 100%);
 
   /* Tekst */
-  --kt-tekst: #1e2928;
-  --kt-tekst-gedempt: #5b6a68;
-  --kt-tekst-op-donker: #f2f6f5;
-  --kt-tekst-op-donker-gedempt: #a9bfbd;
+  --kt-tekst: #22302b; /* ink */
+  --kt-tekst-gedempt: #6b7770; /* muted */
+  --kt-tekst-op-donker: #eef2ef;
+  --kt-tekst-op-donker-gedempt: #b9c7bf;
 
   /* Toestand */
   --kt-succes: #2f7d5b;
-  --kt-succes-100: #e6f2eb;
+  --kt-succes-100: #dcebe3;
   --kt-waarschuwing: #a8701f;
   --kt-waarschuwing-100: #fbf0dd;
   --kt-gevaar: #a8322c;
@@ -65,19 +69,19 @@
   --kt-14: 56px;
 
   /* Vorm */
-  --kt-radius: 8px;
-  --kt-radius-groot: 14px;
+  --kt-radius: 10px;
+  --kt-radius-groot: 16px;
   --kt-radius-pil: 999px;
 
   /* Diepte — één schaal, consequent gebruikt */
-  --kt-schaduw-1: 0 1px 2px rgba(20, 48, 47, 0.06), 0 1px 1px rgba(20, 48, 47, 0.04);
-  --kt-schaduw-2: 0 2px 6px rgba(20, 48, 47, 0.07), 0 1px 2px rgba(20, 48, 47, 0.05);
-  --kt-schaduw-3: 0 12px 32px rgba(20, 48, 47, 0.12), 0 2px 6px rgba(20, 48, 47, 0.06);
+  --kt-schaduw-1: 0 1px 2px rgba(31, 61, 52, 0.06), 0 1px 1px rgba(31, 61, 52, 0.04);
+  --kt-schaduw-2: 0 4px 16px rgba(31, 61, 52, 0.08);
+  --kt-schaduw-3: 0 12px 32px rgba(31, 61, 52, 0.14);
 
-  --kt-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --kt-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --kt-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --kt-serif: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 
-  --kt-zijbalk-breedte: 244px;
+  --kt-zijbalk-breedte: 264px;
 }
 
 *,
@@ -93,25 +97,12 @@ body {
 }
 
 body.kt-body {
-  background: var(--kt-achtergrond);
-  background-attachment: fixed;
-  color: var(--kt-tekst-op-donker);
+  background: var(--kt-papier);
+  color: var(--kt-tekst);
   font-family: var(--kt-sans);
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-}
-
-/*
- * De ondergrond is donker, dus tekst die er direct op staat is licht. Deze vlakken zijn zelf
- * licht en zetten de tekstkleur daarom terug naar donker. Zonder deze regel zou er donkere
- * tekst op een donkere ondergrond ontstaan, of licht-op-licht in een paneel.
- */
-.kt-balk,
-.kt-paneel,
-.kt-keuze__knop,
-.fb-categorie {
-  color: var(--kt-tekst);
 }
 
 /* Zichtbare focus, overal hetzelfde. Nooit weghalen zonder vervanging. */
@@ -146,7 +137,7 @@ body.kt-body {
 }
 
 .kt-zijbalk {
-  background: var(--kt-teal-900);
+  background: var(--kt-zijbalk-verloop);
   color: var(--kt-tekst-op-donker);
   display: flex;
   flex-direction: column;

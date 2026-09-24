@@ -246,8 +246,8 @@ async function seedDemo(): Promise<void> {
       },
       email: 'foodbook@dekrimtexel.example.nl',
       telefoon: '0222 - 123 456',
-      primaireKleur: '#2f6564',
-      secundaireKleur: '#c5a55a',
+      primaireKleur: '#1f3d34',
+      secundaireKleur: '#c99a3f',
       standaardVoettekst:
         'De Krim Texel · Van het eiland. Voor ieder moment. · KVK 12345678 · BTW NL123456789B01',
       betalingstermijnDagen: 30,
