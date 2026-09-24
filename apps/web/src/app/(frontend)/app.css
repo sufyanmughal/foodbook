@@ -35,6 +35,12 @@
   --kt-rand: #e3e1d9;
   --kt-rand-sterk: #cfccc0;
 
+  /* Ondergrond — het donkere doek waar de hele applicatie op staat. Eén verloop, overal
+     hetzelfde, zodat elk scherm dezelfde basis heeft. */
+  --kt-achtergrond-1: #243d3a;
+  --kt-achtergrond-2: #243a38;
+  --kt-achtergrond: linear-gradient(160deg, var(--kt-achtergrond-1) 0%, var(--kt-achtergrond-2) 100%);
+
   /* Tekst */
   --kt-tekst: #1e2928;
   --kt-tekst-gedempt: #5b6a68;
@@ -87,12 +93,25 @@ body {
 }
 
 body.kt-body {
-  background: var(--kt-papier);
-  color: var(--kt-tekst);
+  background: var(--kt-achtergrond);
+  background-attachment: fixed;
+  color: var(--kt-tekst-op-donker);
   font-family: var(--kt-sans);
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * De ondergrond is donker, dus tekst die er direct op staat is licht. Deze vlakken zijn zelf
+ * licht en zetten de tekstkleur daarom terug naar donker. Zonder deze regel zou er donkere
+ * tekst op een donkere ondergrond ontstaan, of licht-op-licht in een paneel.
+ */
+.kt-balk,
+.kt-paneel,
+.kt-keuze__knop,
+.fb-categorie {
+  color: var(--kt-tekst);
 }
 
 /* Zichtbare focus, overal hetzelfde. Nooit weghalen zonder vervanging. */
@@ -435,7 +454,9 @@ body.kt-body {
   background: var(--kt-oppervlak);
   border: 1px solid var(--kt-rand-sterk);
   border-radius: var(--kt-radius);
-  color: inherit;
+  /* Expliciet donker: het veld is wit, maar de ondergrond eromheen is donker. Met `inherit`
+     zou de lichte tekstkleur van de ondergrond het veld onleesbaar maken. */
+  color: var(--kt-tekst);
   font-family: inherit;
   font-size: 16px; /* voorkomt inzoomen op iOS */
   min-height: 38px;
@@ -697,4 +718,20 @@ body.kt-body {
   color: var(--kt-tekst-gedempt);
   font-size: 14px;
   margin: var(--kt-2) 0 0;
+}
+
+/* ── Papier ──────────────────────────────────────────────────────────────────
+ *
+ * Op papier hoort het donkere doek niet thuis. Zonder deze regels komt het verloop in de PDF
+ * terecht dat de documentpagina via Chromium maakt, en dan staat er een donkere rand om elk
+ * vel. Documenten horen wit te zijn, met zwarte tekst.
+ *
+ * `print-color-adjust: exact` staat op de documentstijl zelf, waar kleur juist wél de bedoeling
+ * is — dat blijft zo. Hier wordt alleen de ondergrond van de applicatie teruggezet.
+ */
+@media print {
+  body.kt-body {
+    background: #ffffff;
+    color: #000000;
+  }
 }
