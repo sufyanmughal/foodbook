@@ -1,12 +1,16 @@
 # Webproxy met automatisch HTTPS-certificaat (Let's Encrypt).
 #
 # SITE_URL en ACME_EMAIL komen uit infra/.env. Zonder geldig domein dat naar dit IP-adres
-# wijst, lukt het aanvragen van een certificaat niet — gebruik dan tijdelijk `:80` in plaats
-# van {$SITE_URL} en zet het domein later goed.
+# wijst, lukt het aanvragen van een certificaat niet — gebruik dan tijdelijk `http://JOUW_IP`
+# als SITE_URL en zet het domein later goed.
+
+# Globale instellingen. `email` hoort hier, niet in een site-blok: daar is het geen geldige
+# richtlijn en dan weigert Caddy de hele configuratie met "unrecognized directive: email".
+{
+	email {$ACME_EMAIL}
+}
 
 {$SITE_URL} {
-	email {$ACME_EMAIL}
-
 	# Ruime limiet: foto's komen rechtstreeks van camera's en telefoons binnen.
 	request_body {
 		max_size 30MB

@@ -36,7 +36,24 @@ COPY . .
 RUN npm run build --workspace @foodbook/web
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Draaien
+# Migraties
+#
+# De draaiende image hieronder bevat alleen de gebouwde app: daar zit geen Payload-CLI en geen
+# migratiemap in. Deze fase behoudt de volledige broncode en node_modules, zodat
+# `payload migrate` wél uitgevoerd kan worden. Gebruikt door de `migratie`-service in
+# infra/docker-compose.prod.yml; start niet mee met de gewone app.
+#
+# LET OP — deze fase staat bewust VÓÓR de draaifase. Docker bouwt zonder `--target` de laatste
+# fase uit dit bestand. Stond deze achteraan, dan kreeg de app-container de migratie-image en
+# draaide hij `payload migrate` in plaats van de server. De draaifase hoort dus altijd laatste
+# te staan.
+# ─────────────────────────────────────────────────────────────────────────────
+FROM build AS migratie
+ENV NODE_ENV=production
+CMD ["npm", "run", "migrate", "--workspace", "@foodbook/web"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Draaien — altijd de laatste fase
 # ─────────────────────────────────────────────────────────────────────────────
 FROM node:22-bookworm-slim AS runtime
 WORKDIR /app
@@ -66,15 +83,3 @@ EXPOSE 3000
 # tini zorgt dat Chromium-processen netjes worden opgeruimd.
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["node", "apps/web/server.js"]
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Migraties
-#
-# De draaiende image hierboven bevat alleen de gebouwde app: daar zit geen Payload-CLI en
-# geen migratiemap in. Deze fase behoudt de volledige broncode en node_modules, zodat
-# `payload migrate` wél uitgevoerd kan worden. Gebruikt door de `migrate`-service in
-# infra/docker-compose.prod.yml; start niet mee met de gewone app.
-# ─────────────────────────────────────────────────────────────────────────────
-FROM build AS migratie
-ENV NODE_ENV=production
-CMD ["npm", "run", "migrate", "--workspace", "@foodbook/web"]

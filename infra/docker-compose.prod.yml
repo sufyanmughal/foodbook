@@ -28,6 +28,9 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
+      # Expliciet de doelfase. Zonder dit bouwt Docker de LAATSTE fase uit de Dockerfile, en dat
+      # is de migratiefase — dan draait deze container `payload migrate` in plaats van de server.
+      target: runtime
     restart: unless-stopped
     depends_on:
       db:
