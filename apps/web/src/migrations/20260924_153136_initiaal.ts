@@ -1,7 +1,7 @@
 import type { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
 import { sql } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_producten_eenheid" AS ENUM('gram', 'ml', 'stuk', 'kg', 'liter');
   CREATE TYPE "public"."enum_recepten_ingredienten_eenheid" AS ENUM('gram', 'ml', 'stuk', 'kg', 'liter');
@@ -795,7 +795,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "bedrijfsinstellingen_logo_idx" ON "bedrijfsinstellingen" USING btree ("logo_id");`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    DROP TABLE "producten_materialen" CASCADE;
   DROP TABLE "producten" CASCADE;

@@ -1,3 +1,5 @@
+import type { PictogramNaam } from './Pictogram';
+
 /**
  * De navigatie van de beheeromgeving.
  *
@@ -12,22 +14,11 @@ export interface NavItem {
   href?: string;
   /** Korte omschrijving; gebruikt als toegankelijke toelichting. */
   toelichting: string;
-  /** Hoe het pictogram eruitziet. */
-  icoon:
-    | 'bord'
-    | 'boek'
-    | 'recept'
-    | 'mand'
-    | 'doos'
-    | 'allergeen'
-    | 'klant'
-    | 'agenda'
-    | 'rekenmachine'
-    | 'wagen'
-    | 'pan'
-    | 'factuur'
-    | 'grafiek'
-    | 'tandwiel';
+  /**
+   * Hoe het pictogram eruitziet. Verwijst naar de gedeelde pictogrammenset, zodat een niet-
+   * bestaand icoon meteen een compileerfout geeft in plaats van een leeg vakje in de zijbalk.
+   */
+  icoon: PictogramNaam;
 }
 
 export interface NavGroep {
