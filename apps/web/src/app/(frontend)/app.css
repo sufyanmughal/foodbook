@@ -154,21 +154,92 @@ body.kt-body {
   padding: 0 var(--kt-2) var(--kt-4);
 }
 
-.kt-merk__naam {
+.kt-merk__teken {
   color: var(--kt-tekst-op-donker);
+  display: block;
+  margin-bottom: var(--kt-3);
+  opacity: 0.9;
+}
+
+.kt-merk__naam {
+  color: #fff;
+  display: block;
   font-family: var(--kt-serif);
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  line-height: 1.1;
-  margin: 0;
+  letter-spacing: 0.09em;
+  line-height: 1;
   text-decoration: none;
+}
+
+.kt-merk__sub {
+  color: var(--kt-tekst-op-donker-gedempt);
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  margin-top: 5px;
 }
 
 .kt-merk__belofte {
   color: var(--kt-tekst-op-donker-gedempt);
-  font-size: 12px;
-  margin: var(--kt-1) 0 0;
+  font-family: var(--kt-serif);
+  font-size: 12.5px;
+  font-style: italic;
+  line-height: 1.45;
+  margin: var(--kt-3) 0 0;
+}
+
+/* De navigatie vult de ruimte tussen merk en voettekst, en scrolt zelf. */
+.kt-nav {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.kt-zijbalk__citaat {
+  border-top: 1px solid rgba(242, 246, 245, 0.14);
+  color: var(--kt-tekst-op-donker-gedempt);
+  font-family: var(--kt-serif);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+  padding-top: var(--kt-4);
+}
+
+.kt-zijbalk__streep {
+  background: rgba(255, 255, 255, 0.3);
+  display: block;
+  height: 1px;
+  margin-top: var(--kt-3);
+  width: 28px;
+}
+
+.kt-zijbalk__voet {
+  align-items: center;
+  border-top: 1px solid rgba(242, 246, 245, 0.14);
+  color: var(--kt-tekst-op-donker);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--kt-4);
+}
+
+.kt-zijbalk__voetnaam {
+  font-family: var(--kt-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+}
+
+.kt-zijbalk__voetsub {
+  color: var(--kt-tekst-op-donker-gedempt);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
 }
 
 .kt-nav__kop {
