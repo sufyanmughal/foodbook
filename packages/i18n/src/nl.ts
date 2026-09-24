@@ -245,4 +245,16 @@ export const nl = {
   },
 } as const;
 
-export type Catalogus = typeof nl;
+/**
+ * The shape of a catalogue.
+ *
+ * The values are widened to `string`. Without that, `as const` below would make every value a
+ * literal type (`'Save'` would have to be exactly `'Opslaan'`), and no second language could ever
+ * satisfy the type. The keys stay exact, so a missing or misspelled key in another catalogue is
+ * still a build error.
+ */
+type Verruimd<T> = {
+  [K in keyof T]: T[K] extends string ? string : Verruimd<T[K]>;
+};
+
+export type Catalogus = Verruimd<typeof nl>;

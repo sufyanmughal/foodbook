@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { sqliteAdapter } from '@payloadcms/db-sqlite';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
-import { nl as payloadNl } from '@payloadcms/translations/languages/nl';
+import { en as payloadEn } from '@payloadcms/translations/languages/en';
 import { buildConfig } from 'payload';
 import sharp from 'sharp';
 
@@ -76,10 +76,10 @@ export default buildConfig({
     },
   },
 
-  // De beheeromgeving is volledig Nederlands, net als alles wat de applicatie zelf toont.
+  // The admin panel is in English, as is everything the application itself shows.
   i18n: {
-    supportedLanguages: { nl: payloadNl },
-    fallbackLanguage: 'nl',
+    supportedLanguages: { en: payloadEn },
+    fallbackLanguage: 'en',
   },
 
   collections: [

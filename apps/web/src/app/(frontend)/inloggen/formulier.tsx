@@ -58,7 +58,7 @@ export function InlogFormulier({ gastAan }: { gastAan: boolean }) {
       )}
 
       <div className="lg-field">
-        <label htmlFor="email">E-mailadres</label>
+        <label htmlFor="email">Email address</label>
         <div className="lg-input-shell">
           <Icoon d={PADEN.envelop} />
           <input
@@ -73,14 +73,14 @@ export function InlogFormulier({ gastAan }: { gastAan: boolean }) {
       </div>
 
       <div className="lg-field">
-        <label htmlFor="wachtwoord">Wachtwoord</label>
+        <label htmlFor="wachtwoord">Password</label>
         <div className="lg-input-shell">
           <Icoon d={PADEN.slot} />
           <input
             type={toonWachtwoord ? 'text' : 'password'}
             id="wachtwoord"
             name="wachtwoord"
-            placeholder="Je wachtwoord"
+            placeholder="Your password"
             autoComplete="current-password"
             required
           />
@@ -88,7 +88,7 @@ export function InlogFormulier({ gastAan }: { gastAan: boolean }) {
             type="button"
             className="lg-toggle"
             onClick={() => zetToonWachtwoord((vorige) => !vorige)}
-            aria-label={toonWachtwoord ? 'Wachtwoord verbergen' : 'Wachtwoord tonen'}
+            aria-label={toonWachtwoord ? 'Hide password' : 'Show password'}
           >
             <Icoon d={PADEN.oog} maat={17} />
           </button>
@@ -102,13 +102,13 @@ export function InlogFormulier({ gastAan }: { gastAan: boolean }) {
         disabled={bezig}
         style={{ marginTop: 26 }}
       >
-        {bezig ? 'BEZIG…' : 'INLOGGEN'}
+        {bezig ? 'WORKING…' : 'SIGN IN'}
         <Icoon d={PADEN.pijl} maat={14} />
       </button>
 
       {gastAan && (
         <>
-          <div className="lg-divider">OF</div>
+          <div className="lg-divider">OR</div>
 
           <button
             type="submit"
@@ -117,14 +117,14 @@ export function InlogFormulier({ gastAan }: { gastAan: boolean }) {
             disabled={gastBezig}
           >
             <Icoon d={PADEN.persoon} maat={17} />
-            {gastBezig ? 'Gasttoegang starten…' : 'Doorgaan als gast'}
+            {gastBezig ? 'Starting guest access…' : 'Continue as guest'}
           </button>
         </>
       )}
 
       <div className="lg-form-legal">
-        De gasttoegang is bedoeld om het systeem te bekijken en heeft dezelfde rechten als een
-        beheerder. Zet hem uit voordat het systeem echt in gebruik gaat.
+        Guest access is meant for exploring the system and carries the same rights as an
+        administrator. Turn it off before the system goes into real use.
       </div>
     </form>
   );

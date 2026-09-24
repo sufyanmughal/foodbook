@@ -8,18 +8,20 @@ import type {
   Rol,
 } from '@foodbook/shared-types';
 import { nl, type Catalogus } from './nl';
+import { en } from './en';
 
 export { nl } from './nl';
+export { en } from './en';
 export type { Catalogus } from './nl';
 
-/** Beschikbare talen. v1 is volledig Nederlands; uitbreiden is een catalogus toevoegen (§8). */
-export const TALEN = ['nl'] as const;
+/** Available languages. English is the default; Dutch is kept as a second catalogue. */
+export const TALEN = ['en', 'nl'] as const;
 export type Taal = (typeof TALEN)[number];
-export const STANDAARD_TAAL: Taal = 'nl';
+export const STANDAARD_TAAL: Taal = 'en';
 
-export const CATALOGI: Record<Taal, Catalogus> = { nl };
+export const CATALOGI: Record<Taal, Catalogus> = { en, nl };
 
-const LOCALES: Record<Taal, string> = { nl: 'nl-NL' };
+const LOCALES: Record<Taal, string> = { en: 'en-GB', nl: 'nl-NL' };
 
 export class I18nFout extends Error {
   override readonly name = 'I18nFout';

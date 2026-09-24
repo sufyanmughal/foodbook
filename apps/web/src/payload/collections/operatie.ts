@@ -1,6 +1,6 @@
 import type { CollectionConfig, Field } from 'payload';
 import { LEVERING_STATUS } from '@foodbook/shared-types';
-import { nl } from '@foodbook/i18n';
+import { en } from '@foodbook/i18n';
 import { logistiekToegang } from '../access/rollen';
 import { adresVeld, statusVeld } from '../velden';
 
@@ -148,8 +148,8 @@ export const Pickings: CollectionConfig = {
       required: true,
       defaultValue: 'open',
       options: [
-        { label: nl.status.paklijst.open, value: 'open' },
-        { label: nl.status.paklijst.afgevinkt, value: 'afgevinkt' },
+        { label: en.status.paklijst.open, value: 'open' },
+        { label: en.status.paklijst.afgevinkt, value: 'afgevinkt' },
       ],
       label: 'Status',
     },
@@ -177,6 +177,6 @@ export const Leveringen: CollectionConfig = {
     { name: 'levertijd', type: 'text', required: true, label: 'Levertijd', admin: { description: 'Bv. 16:30.' } },
     adresVeld('adres', 'Leveradres'),
     { name: 'verantwoordelijke', type: 'text', label: 'Verantwoordelijke' },
-    statusVeld('status', LEVERING_STATUS, nl.status.levering, 'gepland'),
+    statusVeld('status', LEVERING_STATUS, en.status.levering, 'gepland'),
   ],
 };

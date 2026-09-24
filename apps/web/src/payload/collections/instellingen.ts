@@ -2,7 +2,7 @@ import type { CollectionConfig, GlobalConfig } from 'payload';
 import type { Rol } from '@foodbook/shared-types';
 import { ROLLEN } from '@foodbook/shared-types';
 import { DOCUMENT_TYPES } from '@foodbook/documents';
-import { nl } from '@foodbook/i18n';
+import { en } from '@foodbook/i18n';
 import { heeftRol, isBeheerder, isIngelogd } from '../access/rollen';
 import { adresVeld, opties } from '../velden';
 
@@ -34,7 +34,7 @@ export const Gebruikers: CollectionConfig = {
       type: 'select',
       required: true,
       defaultValue: 'verkoop',
-      options: opties<Rol>(ROLLEN, nl.rollen),
+      options: opties<Rol>(ROLLEN, en.rollen),
       label: 'Rol',
       saveToJWT: true,
       admin: { description: 'Bepaalt welke onderdelen deze gebruiker mag zien en bewerken.' },
@@ -135,7 +135,7 @@ export const Verzendlog: CollectionConfig = {
       name: 'documentType',
       type: 'select',
       required: true,
-      options: opties(DOCUMENT_TYPES, nl.documenten),
+      options: opties(DOCUMENT_TYPES, en.documenten),
       label: 'Documenttype',
     },
     { name: 'ontvanger', type: 'email', required: true, label: 'Ontvanger' },

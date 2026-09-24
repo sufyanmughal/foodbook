@@ -11,7 +11,7 @@ import { gastToegangAan } from './gast';
 import { INLOG_STIJL } from './stijl';
 
 export const metadata: Metadata = {
-  title: 'Inloggen — Foodbook',
+  title: 'Sign in — Foodbook',
   robots: { index: false, follow: false },
 };
 
@@ -26,12 +26,12 @@ export const dynamic = 'force-dynamic';
 
 /** De fotostrook links. De uitsnede per kolom komt uit het ontwerp. */
 const STROOK = [
-  { bestand: 'col1.jpg', alt: 'Zoervlees in brood', stand: 'lg-mid' },
-  { bestand: 'col2.jpg', alt: 'Brood, knoflook en druiven', stand: 'lg-down' },
-  { bestand: 'col3.jpg', alt: 'Tomaten, brood en kruiden', stand: 'lg-up' },
-  { bestand: 'col4.jpg', alt: 'Pruimen met roomkaas op cracker', stand: 'lg-mid' },
-  { bestand: 'col5.jpg', alt: 'Vers gebakken brood', stand: 'lg-down' },
-  { bestand: 'col6.jpg', alt: 'Kaasplank en charcuterie', stand: 'lg-up' },
+  { bestand: 'col1.jpg', alt: 'Beef stew in bread', stand: 'lg-mid' },
+  { bestand: 'col2.jpg', alt: 'Bread, garlic and grapes', stand: 'lg-down' },
+  { bestand: 'col3.jpg', alt: 'Tomatoes, bread and herbs', stand: 'lg-up' },
+  { bestand: 'col4.jpg', alt: 'Plums with cream cheese on a cracker', stand: 'lg-mid' },
+  { bestand: 'col5.jpg', alt: 'Freshly baked bread', stand: 'lg-down' },
+  { bestand: 'col6.jpg', alt: 'Cheese board and charcuterie', stand: 'lg-up' },
 ] as const;
 
 /**
@@ -95,13 +95,13 @@ export default async function InlogPagina() {
 
         <div className="lg-visual-copy">
           <div className="lg-eyebrow">
-            <span>LOKAAL</span>
-            <span>PUUR</span>
-            <span>DUURZAAM</span>
-            <span>GASTVRIJ</span>
+            <span>LOCAL</span>
+            <span>PURE</span>
+            <span>SUSTAINABLE</span>
+            <span>WELCOMING</span>
           </div>
-          <h1 className="lg-visual-title">Van ontbijt tot afterparty — alles op één plek.</h1>
-          <p className="lg-visual-script">Echt Texel. Echt genieten.</p>
+          <h1 className="lg-visual-title">From breakfast to afterparty — all in one place.</h1>
+          <p className="lg-visual-script">Truly Texel. Truly enjoyable.</p>
         </div>
 
         <div className="lg-visual-foot">
@@ -109,20 +109,20 @@ export default async function InlogPagina() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M4 3v8M6 3v8M4 11a2 2 0 004 0V3M8 3v18M18 3c-2 0-3 2-3 5s1 4 3 4v9" />
             </svg>
-            325 gerechten
+            325 dishes
           </div>
           <div className="lg-foot-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M4 8h16l-1.5 12a2 2 0 01-2 1.8H7.5a2 2 0 01-2-1.8L4 8z" />
               <path d="M8 8a4 4 0 018 0" />
             </svg>
-            48 lokale producenten
+            48 local producers
           </div>
           <div className="lg-foot-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M12 21s-8-5.2-8-11.5A4.5 4.5 0 0112 6a4.5 4.5 0 018 3.5C20 15.8 12 21 12 21z" />
             </svg>
-            100% eilandgevoel
+            100% island feeling
           </div>
         </div>
       </div>
@@ -131,9 +131,9 @@ export default async function InlogPagina() {
       <div className="lg-form-side">
         <div className="lg-form-wrap">
           <div className="lg-form-eyebrow">FOODBOOK PORTAL</div>
-          <h2 className="lg-form-title">Welkom terug</h2>
+          <h2 className="lg-form-title">Welcome back</h2>
           <p className="lg-form-sub">
-            Log in om verder te gaan met arrangementen, calculaties en het beheer van je Foodbook.
+            Sign in to continue with packages, calculations and the management of your Foodbook.
           </p>
 
           <InlogFormulier gastAan={gastToegangAan()} />

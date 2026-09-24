@@ -58,7 +58,7 @@ export async function inloggen(_vorige: InlogStand, formulier: FormData): Promis
   const wachtwoord = String(formulier.get('wachtwoord') ?? '');
 
   if (email === '' || wachtwoord === '') {
-    return { fout: 'Vul je e-mailadres en wachtwoord in.' };
+    return { fout: 'Enter your email address and password.' };
   }
 
   const payload = await getPayload({ config });
@@ -70,12 +70,12 @@ export async function inloggen(_vorige: InlogStand, formulier: FormData): Promis
     });
 
     if (token === undefined) {
-      return { fout: 'Inloggen is niet gelukt. Probeer het opnieuw.' };
+      return { fout: 'Signing in failed. Please try again.' };
     }
 
     await zetSessie(token, exp);
   } catch {
-    return { fout: 'Dat e-mailadres en dat wachtwoord horen niet bij elkaar.' };
+    return { fout: 'That email address and password do not match.' };
   }
 
   redirect('/rekenen');
@@ -83,7 +83,7 @@ export async function inloggen(_vorige: InlogStand, formulier: FormData): Promis
 
 export async function inloggenAlsGast(): Promise<InlogStand> {
   if (!gastToegangAan()) {
-    return { fout: 'De gasttoegang staat uit op deze omgeving.' };
+    return { fout: 'Guest access is disabled on this environment.' };
   }
 
   const payload = await getPayload({ config });
@@ -122,12 +122,12 @@ export async function inloggenAlsGast(): Promise<InlogStand> {
     });
 
     if (token === undefined) {
-      return { fout: 'De gasttoegang kon niet worden gestart.' };
+      return { fout: 'Guest access could not be started.' };
     }
 
     await zetSessie(token, exp);
   } catch {
-    return { fout: 'De gasttoegang kon niet worden gestart.' };
+    return { fout: 'Guest access could not be started.' };
   }
 
   redirect('/rekenen');

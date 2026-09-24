@@ -1,7 +1,7 @@
 import type { Field, Option } from 'payload';
 import type { Eenheid } from '@foodbook/shared-types';
 import { EENHEDEN } from '@foodbook/shared-types';
-import { nl } from '@foodbook/i18n';
+import { en } from '@foodbook/i18n';
 
 /** Zet Nederlandse labels om naar Payload-selectopties. */
 export function opties<T extends string>(waarden: readonly T[], labels: Record<T, string>): Option[] {
@@ -9,7 +9,7 @@ export function opties<T extends string>(waarden: readonly T[], labels: Record<T
 }
 
 /** De vijf eenheden uit §3.1/§3.3, met hun Nederlandse labels. */
-export const eenheidOpties = (): Option[] => opties<Eenheid>(EENHEDEN, nl.eenheden);
+export const eenheidOpties = (): Option[] => opties<Eenheid>(EENHEDEN, en.eenheden);
 
 /** Herbruikbaar adresblok (§3.6, §3.15). */
 export function adresVeld(naam: string, label: string): Field {
@@ -40,7 +40,7 @@ export function statusVeld(
     required: true,
     defaultValue: standaard,
     options: opties(waarden, labels),
-    label: nl.velden.status,
+    label: en.velden.status,
     index: true,
   };
 }

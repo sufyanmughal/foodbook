@@ -1,6 +1,6 @@
 import type { CollectionConfig, Field } from 'payload';
 import { FACTUUR_STATUS, OFFERTE_STATUS, ORDER_STATUS } from '@foodbook/shared-types';
-import { nl } from '@foodbook/i18n';
+import { en } from '@foodbook/i18n';
 import { bepaalVolgendFactuurNummer } from '@foodbook/calculation-engine';
 import { verkoopToegang } from '../access/rollen';
 import { statusVeld } from '../velden';
@@ -67,7 +67,7 @@ export const Offertes: CollectionConfig = {
     },
     btwUitsplitsingVeld,
     ...totalenVelden,
-    statusVeld('status', OFFERTE_STATUS, nl.status.offerte, 'concept'),
+    statusVeld('status', OFFERTE_STATUS, en.status.offerte, 'concept'),
     { name: 'geldigTot', type: 'date', required: true, label: 'Geldig tot' },
     { name: 'notities', type: 'textarea', label: 'Notities' },
     { name: 'pdfBestand', type: 'upload', relationTo: 'media', label: 'PDF', admin: { readOnly: true } },
@@ -121,7 +121,7 @@ export const Orders: CollectionConfig = {
       required: true,
       label: 'Geaccepteerde offerte',
     },
-    statusVeld('status', ORDER_STATUS, nl.status.order, 'bevestigd'),
+    statusVeld('status', ORDER_STATUS, en.status.order, 'bevestigd'),
     { name: 'bevestigingsdatum', type: 'date', required: true, label: 'Bevestigingsdatum' },
   ],
 };
@@ -172,7 +172,7 @@ export const Facturen: CollectionConfig = {
     },
     btwUitsplitsingVeld,
     ...totalenVelden,
-    statusVeld('status', FACTUUR_STATUS, nl.status.factuur, 'concept'),
+    statusVeld('status', FACTUUR_STATUS, en.status.factuur, 'concept'),
     {
       name: 'creditVan',
       type: 'relationship',

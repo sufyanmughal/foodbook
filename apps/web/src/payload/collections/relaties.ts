@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { EVENT_STATUS } from '@foodbook/shared-types';
-import { nl } from '@foodbook/i18n';
+import { en } from '@foodbook/i18n';
 import { logistiekToegang, verkoopToegang } from '../access/rollen';
 import { adresVeld, eenheidOpties, statusVeld } from '../velden';
 
@@ -99,7 +99,7 @@ export const Evenementen: CollectionConfig = {
       label: 'Aantal gasten',
       admin: { description: 'Het ene getal dat de hele keten herberekent.' },
     },
-    statusVeld('status', EVENT_STATUS, nl.status.evenement, 'concept'),
+    statusVeld('status', EVENT_STATUS, en.status.evenement, 'concept'),
     {
       name: 'producten',
       type: 'array',
