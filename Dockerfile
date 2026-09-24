@@ -33,6 +33,13 @@ RUN npm ci --include=dev
 FROM basis AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Het geheugen van Node begrenzen. De bouw draait naast Postgres, Caddy en de draaiende app op
+# een machine met twee GB. Zonder grens laat Node zijn heap oplopen tot de machine gaat wisselen
+# en niets meer beantwoordt; met een grens ruimt de garbage collector eerder op. Dat is trager,
+# maar de server blijft bereikbaar. Zie ook experimental.cpus in next.config.mjs.
+ENV NODE_OPTIONS=--max-old-space-size=1024
+
 RUN npm run build --workspace @foodbook/web
 
 # ─────────────────────────────────────────────────────────────────────────────

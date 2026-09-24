@@ -40,6 +40,19 @@ const volgendeConfig = {
       },
     ],
   },
+
+  /**
+   * De bouw draait in een container op een droplet met één vCPU en twee GB geheugen, terwijl
+   * Postgres, Caddy en de draaiende app daar ook staan. Next verdeelt het compileren standaard
+   * over meerdere processen; op deze machine is dat te veel. Het geheugen raakt vol, de kernel
+   * gaat wisselen en de server reageert helemaal niet meer — ook niet op ssh.
+   *
+   * Eén compilerproces houdt de piek binnen de beschikbare ruimte. Dat is trager bouwen, maar
+   * de machine blijft bereikbaar.
+   */
+  experimental: {
+    cpus: 1,
+  },
 };
 
 export default withPayload(volgendeConfig);
